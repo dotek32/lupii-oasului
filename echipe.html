@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echipele Academiei Lupii Oasului</title>
+    <!-- Incarca Tailwind CSS pentru stilizare -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incarca fontul Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome pentru iconițe -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* fundal dark */
+            color: #e2e8f0; /* text deschis */
+        }
+        
+        /* Stiluri pentru modal/lightbox */
+        .modal {
+            display: none; /* Ascuns implicit */
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Conținutul modalului (imaginea) */
+        .modal-content-img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 1rem;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.7);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            text-shadow: 0 0 10px #00bfff;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        @keyframes zoom {
+            from { transform: scale(0); opacity: 0; } 
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Stiluri pentru sectiunile de echipa tip acordeon */
+        .team-section {
+            background-color: #2d3748;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .team-header {
+            cursor: pointer;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4a5568;
+            transition: background-color 0.3s ease;
+        }
+        
+        .team-header:hover {
+            background-color: #626b7b;
+        }
+        
+        .team-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .team-content.expanded {
+            max-height: 1000px; /* Valoare mare pentru a permite extinderea completa */
+            padding: 1rem;
+        }
+
+        .team-header i {
+            transition: transform 0.5s ease;
+        }
+        
+        .team-header.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Ajustări pentru tabel pe mobil */
+        .overflow-x-auto table {
+            min-width: 600px;
+        }
+
+        /* Stiluri specifice pentru meniul mobil */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Header & Navigatie -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo si Nume -->
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <img src="IMAGES/logo.png" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+
+            <!-- Meniul principal pentru desktop -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="#echipe" class="text-blue-500 font-bold transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+
+            <!-- Buton pentru meniul mobil (vizibil doar pe ecrane mici) -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-100 hover:text-blue-500 focus:outline-none focus:text-blue-500">
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Meniul lateral pentru mobil -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-900 shadow-xl z-50 p-6 flex flex-col items-center pt-20">
+            <button id="close-menu-button" class="absolute top-4 right-4 text-gray-100 hover:text-red-500 transition-colors duration-300">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-8 text-center text-lg">
+                <a href="home.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="#echipe" class="block text-blue-500 font-bold transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <h1 class="text-5xl font-bold text-center text-blue-500 mb-12">Echipele Academiei</h1>
+
+        <!-- Acordeon pentru fiecare echipa -->
+        <div class="space-y-6">
+            <!-- Sectiunea pentru ECHIPA 2013/2014 -->
+            <section id="echipa-2013-2014-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2013-2014-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2013/2014</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2013-2014-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                            <thead>
+                                <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                                    <th class="py-3 px-6">Nume Jucător</th>
+                                    <th class="py-3 px-6">Data Nașterii</th>
+                                    <th class="py-3 px-6">Vârsta</th>
+                                    <th class="py-3 px-6">Număr tricou</th>
+                                    <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr>
+                                    <td class="py-4 px-6">BERINDE GABRIEL</td>
+                                    <td class="py-4 px-6">21.06.2013</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">115</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BG" alt="Poza lui Berinde Gabriel" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BERINDE+GABRIEL')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">BU SILVIU</td>
+                                    <td class="py-4 px-6">29.04.2013</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">117</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BS" alt="Poza lui Bu Silviu" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BU+SILVIU')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">BURA LUCAS</td>
+                                    <td class="py-4 px-6">24.12.2012</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">126</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BL" alt="Poza lui Bura Lucas" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BURA+LUCAS')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">ISTVANFI DANIEL</td>
+                                    <td class="py-4 px-6">31.01.2013</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">96</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=ID" alt="Poza lui Istvanfi Daniel" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=ISTVANFI+DANIEL')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">JIBOC DAN</td>
+                                    <td class="py-4 px-6">23.05.2014</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">-</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=JD" alt="Poza lui Jiboc Dan" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=JIBOC+DAN')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">MOLNAR MIHAI</td>
+                                    <td class="py-4 px-6">04.03.2014</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">94</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MM" alt="Poza lui Molnar Mihai" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MOLNAR+MIHAI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">NECHITA EDUARD</td>
+                                    <td class="py-4 px-6">20.11.2013</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">108</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=NE" alt="Poza lui Nechita Eduard" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=NECHITA+EDUARD')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">OROS DAVID</td>
+                                    <td class="py-4 px-6">23.05.2014</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">95</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=OD" alt="Poza lui Oros David" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=OROS+DAVID')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">POP ALBERT</td>
+                                    <td class="py-4 px-6">10.03.2013</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">57</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=PA" alt="Poza lui Pop Albert" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=POP+ALBERT')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">TOMA ADRIAN</td>
+                                    <td class="py-4 px-6">21.12.2013</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">99</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=TA" alt="Poza lui Toma Adrian" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=TOMA+ADRIAN')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">UNGUREANU ALEJANDRO</td>
+                                    <td class="py-4 px-6">30.07.2014</td>
+                                    <td class="py-4 px-6">11</td>
+                                    <td class="py-4 px-6">111</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=UA" alt="Poza lui Ungureanu Alejandro" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=UNGUREANU+ALEJANDRO')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">VARGA VLAD</td>
+                                    <td class="py-4 px-6">28.09.2012</td>
+                                    <td class="py-4 px-6">12</td>
+                                    <td class="py-4 px-6">124</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=VV" alt="Poza lui Varga Vlad" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=VARGA+VLAD')">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sectiunea pentru ECHIPA 2015/2016 -->
+            <section id="echipa-2015-2016-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2015-2016-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2015/2016</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2015-2016-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                            <thead>
+                                <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                                    <th class="py-3 px-6">Nume Jucător</th>
+                                    <th class="py-3 px-6">Data Nașterii</th>
+                                    <th class="py-3 px-6">Vârsta</th>
+                                    <th class="py-3 px-6">Număr tricou</th>
+                                    <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr>
+                                    <td class="py-4 px-6">BERCHI SASHA</td>
+                                    <td class="py-4 px-6">13.04.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">123</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BS" alt="Poza lui Berchi Sasha" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BERCHI+SASHA')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">BRAHARIU ANDREI</td>
+                                    <td class="py-4 px-6">07.12.2016</td>
+                                    <td class="py-4 px-6">8</td>
+                                    <td class="py-4 px-6">89</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BA" alt="Poza lui Brahariu Andrei" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BRAHARIU+ANDREI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">BURA DAMIAN</td>
+                                    <td class="py-4 px-6">11.05.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">110</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BD" alt="Poza lui Bura Damian" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BURA+DAMIAN')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">CONTRA MAYA</td>
+                                    <td class="py-4 px-6">17.09.2014</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">58</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CM" alt="Poza lui Contra Maya" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CONTRA+MAYA')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">DRIMBAREAN MARK</td>
+                                    <td class="py-4 px-6">10.03.2015</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=DM" alt="Poza lui Drimbarean Mark" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=DRIMBAREAN+MARK')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">FECHETE ANDREI</td>
+                                    <td class="py-4 px-6">25.05.2015</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">45</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=FA" alt="Poza lui Fechete Andrei" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=FECHETE+ANDREI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">GANEA ILIE</td>
+                                    <td class="py-4 px-6">11.08.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">113</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=GI" alt="Poza lui Ganea Ilie" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=GANEA+ILIE')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">GANEA MIHAI</td>
+                                    <td class="py-4 px-6">14.07.2015</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">120</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=GM" alt="Poza lui Ganea Mihai" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=GANEA+MIHAI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">MARIAN ANDREI</td>
+                                    <td class="py-4 px-6">01.03.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">118</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MA" alt="Poza lui Marian Andrei" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MARIAN+ANDREI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">MIHALCEA ALEXANDRU</td>
+                                    <td class="py-4 px-6">09.07.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">119</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MA" alt="Poza lui Mihalcea Alexandru" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MIHALCEA+ALEXANDRU')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">MOLNAR PATRICK</td>
+                                    <td class="py-4 px-6">03.01.2015</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">125</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MP" alt="Poza lui Molnar Patrick" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MOLNAR+PATRICK')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">NISTOR IASMINA</td>
+                                    <td class="py-4 px-6">03.07.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">106</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=NI" alt="Poza lui Nistor Iasmina" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=NISTOR+IASMINA')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">POP ADRIAN</td>
+                                    <td class="py-4 px-6">25.07.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">116</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=PA" alt="Poza lui Pop Adrian" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=POP+ADRIAN')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">ROMAN MARCO</td>
+                                    <td class="py-4 px-6">29.11.2015</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">121</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=RM" alt="Poza lui Roman Marco" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=ROMAN+MARCO')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">RUSU ANDREI</td>
+                                    <td class="py-4 px-6">01.07.2016</td>
+                                    <td class="py-4 px-6">9</td>
+                                    <td class="py-4 px-6">107</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=RA" alt="Poza lui Rusu Andrei" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=RUSU+ANDREI')">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6">SUIOM CLAUDIU</td>
+                                    <td class="py-4 px-6">15.02.2015</td>
+                                    <td class="py-4 px-6">10</td>
+                                    <td class="py-4 px-6">109</td>
+                                    <td class="py-4 px-6">
+                                        <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SC" alt="Poza lui Suiom Claudiu" 
+                                             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                             onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SUIOM+CLAUDIU')">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="space-y-6 mt-6">
+        <!-- Sectiunea pentru ECHIPA 2016 -->
+       <section id="echipa-2016-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2016-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2016</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2016-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                    <thead>
+                        <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3 px-6">Nume Jucător</th>
+                            <th class="py-3 px-6">Data Nașterii</th>
+                            <th class="py-3 px-6">Vârsta</th>
+                            <th class="py-3 px-6">Număr tricou</th>
+                            <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Am inclus direct <img> in celula, cu un onclick care trimite calea imaginii mari -->
+                        <tr>
+                            <td class="py-4 px-6">BALTA GABRIEL</td>
+                            <td class="py-4 px-6">10.11.2016</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">11</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BG" alt="Poza lui Berinde Gabriel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BERINDE+GABRIEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">BERCHI MARIO</td>
+                            <td class="py-4 px-6">05.09.2016</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">21</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BM" alt="Poza lui Bu Silviu" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BERCHI+MARIO')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">DUMITRESCU ALESSIO</td>
+                            <td class="py-4 px-6">23.01.2016/td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">12</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=DA" alt="Poza lui Bura Lucas" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=DUMITRESCU+ALESSIO')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">GLAGOLA EDAN</td>
+                            <td class="py-4 px-6">07.09.2016</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">22</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=GE" alt="Poza lui Istvanfi Daniel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=GLAGOLA+EDAN')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">HAIDUC LAURENTIU</td>
+                            <td class="py-4 px-6">19.02.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">13</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=HL" alt="Poza lui Jiboc Dan" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=HAIDUC+LAURENTIU')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MAGUREANU IULIAN</td>
+                            <td class="py-4 px-6">04.07.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">19</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MI" alt="Poza lui Molnar Mihai" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MAGUREANU+IULIAN')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MICLEA DAVID</td>
+                            <td class="py-4 px-6">11.07.2015</td>
+                            <td class="py-4 px-6">10</td>
+                            <td class="py-4 px-6">16</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MD" alt="Poza lui Nechita Eduard" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MICLEA+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">NICHITA GABRIEL</td>
+                            <td class="py-4 px-6">02.04.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">15</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=NG" alt="Poza lui Oros David" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=NICHITA+GABRIEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">OBSITOS DAVID</td>
+                            <td class="py-4 px-6">13.03.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">17</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=OD" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=OBSITOS+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">SALAGEAN DAVID</td>
+                            <td class="py-4 px-6">05.05.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">17</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SD" alt="Poza lui Toma Adrian" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SALAGEAN+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">SIMONCA RAFAEL</td>
+                            <td class="py-4 px-6">27.10.2016</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">23</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SR" alt="Poza lui Ungureanu Alejandro" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SIMONCA+RAFAEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">TORZ ANDREI</td>
+                            <td class="py-4 px-6">16.08.2016</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">23</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=TA" alt="Poza lui Varga Vlad" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=TORZ+ANDREI')"
+                                >
+                            </td>
+                        </tr>
+                   
+                    <tr>
+                            <td class="py-4 px-6">ZIMBRU NICOLAS</td>
+                            <td class="py-4 px-6">14.06.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">18</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=ZN" alt="Poza lui Varga Vlad" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=ZIMBRU+NICOLAS')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">VARGA DAVID</td>
+                            <td class="py-4 px-6">19.08.2017</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">24</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=VD" alt="Poza lui Varga Vlad" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=VARGA+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">VARGA SAMUEL</td>
+                            <td class="py-4 px-6">31.03.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">14</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=VS" alt="Poza lui Varga Vlad" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=VARGA+SAMUEL')"
+                                >
+                            </td>
+                        </tr>
+
+                </table>
+            </div>
+        </section>
+        <!-- Tabel pentru ECHIPA 2017 -->
+ <section id="echipa-2017-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2017-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2017</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2017-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                    <thead>
+                        <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3 px-6">Nume Jucător</th>
+                            <th class="py-3 px-6">Data Nașterii</th>
+                            <th class="py-3 px-6">Vârsta</th>
+                            <th class="py-3 px-6">Număr tricou</th>
+                            <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Am inclus direct <img> in celula, cu un onclick care trimite calea imaginii mari -->
+                        <tr>
+                            <td class="py-4 px-6">BOJE RAUL</td>
+                            <td class="py-4 px-6">28.04.2017</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">46</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BG" alt="Poza lui Berinde Gabriel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BERINDE+RAUL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">GANEA CAMELIA</td>
+                            <td class="py-4 px-6">29.03.2017</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">52</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=GC" alt="Poza lui GANEA CAMELIA" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('IMAGES/CAMELIA.JPG')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">KLLOGJERI ALESSANDRO</td>
+                            <td class="py-4 px-6">16.03.2017</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">43</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=KA" alt="Poza lui Bura Lucas" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=KLLOGJERI+ALLESANDRO')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MIHOC GABRIEL</td>
+                            <td class="py-4 px-6">24.12.2017</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">50</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MG" alt="Poza lui Istvanfi Daniel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MIHOC+GABRIEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MOCIRAN LUCA</td>
+                            <td class="py-4 px-6">30.06.2017</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">48</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=ML" alt="Poza lui Jiboc Dan" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MOCIRAN+LUCA')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MURESAN MATEI</td>
+                            <td class="py-4 px-6">13.01.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">82</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MM" alt="Poza lui Molnar Mihai" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MURESAN+MATEI')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">SAS ANDREI</td>
+                            <td class="py-4 px-6">28.03.2017</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">49</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SA" alt="Poza lui Nechita Eduard" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SAS+ANDREI')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">TATAR DAIANA</td>
+                            <td class="py-4 px-6">28.01.2016</td>
+                            <td class="py-4 px-6">9</td>
+                            <td class="py-4 px-6">54</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=TD" alt="Poza lui Oros David" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=TATAR+DAIANA')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">TATAR GEORGE</td>
+                            <td class="py-4 px-6">18.05.2017</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">45</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=TG" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=TATAR+GEORGE')"
+                                >
+                            </td>
+                        </tr>
+                        
+
+                </table>
+            </div>
+        </section>
+        <!-- Tabel pentru ECHIPA 2018 -->
+         <section id="echipa-2018-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2018-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2018</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2018-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                    <thead>
+                        <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3 px-6">Nume Jucător</th>
+                            <th class="py-3 px-6">Data Nașterii</th>
+                            <th class="py-3 px-6">Vârsta</th>
+                            <th class="py-3 px-6">Număr tricou</th>
+                            <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Am inclus direct <img> in celula, cu un onclick care trimite calea imaginii mari -->
+                        <tr>
+                            <td class="py-4 px-6">BALINT ANTON</td>
+                            <td class="py-4 px-6">09.02.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">61</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BA" alt="Poza lui Berinde Gabriel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BALINT+ANTON')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">BRINDUSAN DRAGOS</td>
+                            <td class="py-4 px-6">10.09.2017</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">77</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BD" alt="Poza lui GANEA CAMELIA" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BRINDUSAN+DRAGOS')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">BUD RAFAEL</td>
+                            <td class="py-4 px-6">21.01.2018</td>
+                            <td class="py-4 px-6">8</td>
+                            <td class="py-4 px-6">60</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BR" alt="Poza lui Bura Lucas" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BUD+RAFAEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CHESA CRISTIAN</td>
+                            <td class="py-4 px-6">24.05.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">47</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CC" alt="Poza lui Istvanfi Daniel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CHESA+CRISTIAN')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CICIO CASIAN</td>
+                            <td class="py-4 px-6">20.01.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">64</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CC" alt="Poza lui Jiboc Dan" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CICIO+CASIAN')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CIOBRA LUCAS</td>
+                            <td class="py-4 px-6">16.06.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">62</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CL" alt="Poza lui Molnar Mihai" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CIOBRA+LUCAS')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CRISAN LUCA</td>
+                            <td class="py-4 px-6">15.10.2018</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">92</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CL" alt="Poza lui Nechita Eduard" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CRISAN+LUCA')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">FEDORCA TUDOR</td>
+                            <td class="py-4 px-6">03.11.2017</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">74</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=FT" alt="Poza lui Oros David" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=FEDORCA+TUDOR')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">LOBONT REMUS</td>
+                            <td class="py-4 px-6">28.02.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">69</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=LR" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=LOBONT+REMUS')"
+                                >
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="py-4 px-6">MIHOC EMANUEL</td>
+                            <td class="py-4 px-6">23.06.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">80</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=ME" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MIHOC+EMANUEL')"
+                                >
+                            </td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="py-4 px-6">MOLNAR DAVID</td>
+                            <td class="py-4 px-6">08.03.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">80</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MD" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MOLNAR+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="py-4 px-6">NECHITA FLAVIUS</td>
+                            <td class="py-4 px-6">07.12.2018</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">84</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=NF" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=NECHITA+FLAVIUS')"
+                                >
+                            </td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="py-4 px-6">POP FLAVIUS</td>
+                            <td class="py-4 px-6">29.06.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">71</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=PF" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=POP+FLAVIUS')"
+                                >
+                            </td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="py-4 px-6">SOMLE PATRIK</td>
+                            <td class="py-4 px-6">08.02.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">102</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SP" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SOMLE+PATRIK')"
+                                >
+                            </td>
+                        </tr>
+                        
+                         <tr>
+                            <td class="py-4 px-6">SPENDEA RAUL</td>
+                            <td class="py-4 px-6">10.05.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">63</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SR" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SPENDEA+RAUL')"
+                                >
+                            </td>
+                        </tr>
+                        
+                        
+
+                </table>
+            </div>
+        </section>
+        <!-- Tabel pentru ECHIPA 2019 -->
+ <section id="echipa-2019-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2019-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2019</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2019-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                    <thead>
+                        <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3 px-6">Nume Jucător</th>
+                            <th class="py-3 px-6">Data Nașterii</th>
+                            <th class="py-3 px-6">Vârsta</th>
+                            <th class="py-3 px-6">Număr tricou</th>
+                            <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Am inclus direct <img> in celula, cu un onclick care trimite calea imaginii mari -->
+                        <tr>
+                            <td class="py-4 px-6">ARMENEAN FILIP</td>
+                            <td class="py-4 px-6">30.04.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">67</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=AF" alt="Poza lui Berinde Gabriel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=ARMENEAN+FILIP')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">BOBITA LUIS</td>
+                            <td class="py-4 px-6">14.05.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">107</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=BL" alt="Poza lui GANEA CAMELIA" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=BOBITA+LUIS')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CARDOS SOFIA</td>
+                            <td class="py-4 px-6">31.07.2018</td>
+                            <td class="py-4 px-6">7</td>
+                            <td class="py-4 px-6">104</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CS" alt="Poza lui Bura Lucas" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CARDOS+SOFIA')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CICIO RARES</td>
+                            <td class="py-4 px-6">29.08.2019</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">66</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CR" alt="Poza lui Istvanfi Daniel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CICIO+RARES')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CIORCAS-GHERTAN GHEORGHE</td>
+                            <td class="py-4 px-6">13.06.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">78</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CGG" alt="Poza lui Jiboc Dan" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CIORCAS-GHERTAN+GHEORGHE')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MATEI RARES</td>
+                            <td class="py-4 px-6">17.09.2019</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">109</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MR" alt="Poza lui Molnar Mihai" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MATEI+RARES')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MURESAND DAVID</td>
+                            <td class="py-4 px-6">17.12.2018</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">86</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MD" alt="Poza lui Nechita Eduard" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MURESAND+DAVID')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">POP DARIUS ALEXANDRU</td>
+                            <td class="py-4 px-6">21.01.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">73</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=PDA" alt="Poza lui Oros David" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=POP+DARIUS+ALEXANDRU')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">SIMON ARMIN</td>
+                            <td class="py-4 px-6">29.06.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">73</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=SA" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=SA')"
+                                >
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="py-4 px-6">TITEA RARES BOGDAN</td>
+                            <td class="py-4 px-6">25.04.2019</td>
+                            <td class="py-4 px-6">6</td>
+                            <td class="py-4 px-6">119</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=TRB" alt="Poza lui Pop Albert" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=TITEA+RARES+BOGDAN')"
+                                >
+                            </td>
+                        </tr>
+
+                </table>
+            </div>
+        </section>
+        <!-- Tabel pentru ECHIPA 2020 -->
+  <section id="echipa-2020-section" class="team-section">
+                <div class="team-header" onclick="toggleAccordion('echipa-2020-content')">
+                    <h2 class="text-3xl font-semibold text-blue-400">ECHIPA 2020</h2>
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+                <div id="echipa-2020-content" class="team-content">
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full bg-gray-800 rounded-xl border border-gray-700">
+                    <thead>
+                        <tr class="bg-gray-700 text-left text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                            <th class="py-3 px-6">Nume Jucător</th>
+                            <th class="py-3 px-6">Data Nașterii</th>
+                            <th class="py-3 px-6">Vârsta</th>
+                            <th class="py-3 px-6">Număr tricou</th>
+                            <th class="py-3 px-6 rounded-tr-xl">Poză</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Am inclus direct <img> in celula, cu un onclick care trimite calea imaginii mari -->
+                        <tr>
+                            <td class="py-4 px-6">ANTON ALESSIO</td>
+                            <td class="py-4 px-6">11.03.2020</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">128</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=AA" alt="Poza lui Berinde Gabriel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=ANTON+ALESSIO')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">CRISAN RARES</td>
+                            <td class="py-4 px-6">05.04.2020</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">87</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=CR" alt="Poza lui GANEA CAMELIA" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=CRISAN+RARES')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">DAN GABRIEL</td>
+                            <td class="py-4 px-6">26.06.2020</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">112</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=DG" alt="Poza lui Bura Lucas" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=DAN+GABRIEL')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">DITOIU NICHOLAS</td>
+                            <td class="py-4 px-6">21.05.2020</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">116</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=DN" alt="Poza lui Istvanfi Daniel" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=DITOIU+NICHOLAS')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">GANEA IULIAN</td>
+                            <td class="py-4 px-6">23.08.2020</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">121</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=GI" alt="Poza lui Jiboc Dan" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('IMAGES/IULIAN.JPG')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MACOVEI PHILIP</td>
+                            <td class="py-4 px-6">05.11.2019</td>
+                            <td class="py-4 px-6">4</td>
+                            <td class="py-4 px-6">120</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MP" alt="Poza lui Molnar Mihai" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MACOVEI+PHILIP')"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">MIHOC ANDREI</td>
+                            <td class="py-4 px-6">05.11.2019</td>
+                            <td class="py-4 px-6">5</td>
+                            <td class="py-4 px-6">-</td>
+                            <td class="py-4 px-6">
+                                <img src="https://placehold.co/40x40/5e5d5d/FFFFFF?text=MA" alt="Poza lui Nechita Eduard" 
+                                     class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 ring-blue-500 transition-shadow duration-300" 
+                                     onclick="showPlayerPhoto('https://placehold.co/600x400/000000/FFFFFF?text=MIHOC+ANDREI')"
+                                >
+                            </td>
+                        </tr>
+                        
+                </table>
+            </div>
+        </section>
+
+        </div>
+    </main>
+
+    <!-- Modal pentru afișarea pozelor jucătorilor -->
+    <div id="playerModal" class="modal">
+        <span class="close-btn" onclick="closePlayerModal()">&times;</span>
+        <img class="modal-content-img" id="playerPhoto">
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center py-6 mt-12 shadow-inner">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://www.facebook.com/academialupiioasului" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/lupii.oasului" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru functionalitate -->
+    <script>
+        // Functia care afiseaza o imagine mare intr-un modal, bazat pe URL-ul primit
+        window.showPlayerPhoto = function(photoUrl) {
+            if (photoUrl) {
+                const modal = document.getElementById("playerModal");
+                const modalImg = document.getElementById("playerPhoto");
+
+                modalImg.src = photoUrl;
+                modal.style.display = "flex";
+            }
+        };
+
+        // Functia pentru a inchide modalul
+        window.closePlayerModal = function() {
+            const modal = document.getElementById("playerModal");
+            modal.style.display = "none";
+        };
+
+        // Functia de a extinde/restrange sectiunile de echipa tip acordeon
+        window.toggleAccordion = function(contentId) {
+            const content = document.getElementById(contentId);
+            const header = content.previousElementSibling;
+
+            // Daca continutul este deja extins, restrange-l
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                header.classList.remove('active');
+            } else {
+                // In caz contrar, extinde continutul si restrange celelalte
+                const expandedContent = document.querySelector('.team-content.expanded');
+                const activeHeader = document.querySelector('.team-header.active');
+
+                if (expandedContent && activeHeader) {
+                    expandedContent.classList.remove('expanded');
+                    activeHeader.classList.remove('active');
+                }
+                content.classList.add('expanded');
+                header.classList.add('active');
+            }
+        };
+
+        // Logica pentru meniul mobil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Închide meniul la clic pe o legătură din interiorul lui
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+    </script>
+</body>
+</html>

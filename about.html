@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despre Noi - Lupii Oasului</title>
+    <!-- Incarca Tailwind CSS prin CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incarca Font Awesome pentru iconite -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+            background-color: #1a202c; /* Fundal intunecat */
+            color: #e2e8f0; /* Text deschis */
+        }
+
+        /* Stil pentru preloader (similar cu cel din exemplul tau) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Stil pentru imaginea logo din preloader */
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            animation: fadeInScale 1.5s forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .social-icon {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .social-icon.facebook:hover { color: #1877F2; }
+        .social-icon.instagram:hover { color: #E1306C; }
+        .social-icon.twitter:hover { color: #1DA1F2; }
+        .social-icon.tiktok:hover { color: #69C9D0; }
+        
+        .shadow-3xl {
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5), 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stil pentru butonul de meniu mobil */
+        .hamburger-menu-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 100;
+        }
+        .hamburger-menu-button span {
+            display: block;
+            width: 2rem;
+            height: 0.25rem;
+            background: #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        .hamburger-menu-button.open span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+        .hamburger-menu-button.open span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-1rem);
+        }
+        .hamburger-menu-button.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/100x100/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+    </div>
+
+    <!-- Header & Navigatie -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/40x40/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            
+            <!-- Meniu pentru desktop -->
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-blue-500 font-bold transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+
+            <!-- Buton meniu mobil -->
+            <button id="menu-button" class="md:hidden hamburger-menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+        
+        <!-- Meniu mobil (ascuns implicit) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 px-4 pt-2 pb-4">
+            <nav class="flex flex-col space-y-2">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">GALLERY</a>
+                <a href="about.html" class="text-blue-500 font-bold py-2 transition-colors duration-200">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Section - Despre Noi -->
+    <main class="container mx-auto px-4 py-12 md:py-20">
+        <div class="bg-gray-800 p-8 rounded-3xl shadow-3xl text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Despre Noi - Lupii Oasului</h1>
+
+            <!-- Misiunea Noastra -->
+            <section class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-blue-400 mb-4">Misiunea Noastră</h2>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    La **Clubul Sportiv "Lupii Oasului"**, credem că sportul este mai mult decât un joc. Este o școală a vieții, un loc unde copiii învață disciplina, respectul, munca în echipă și perseverența. Misiunea noastră este de a oferi un mediu sigur și pozitiv, în care fiecare copil să se dezvolte, atât ca sportiv, cât și ca om.
+                </p>
+                <p class="text-lg text-gray-300 leading-relaxed mt-4">
+                    Suntem o comunitate dedicată, unită de pasiunea pentru sport și de dorința de a construi o fundație solidă pentru viitorul fiecărui membru. Fiecare victorie pe teren este o dovadă a muncii, dar fiecare zâmbet și fiecare prietenie legată sunt adevăratele noastre trofee.
+                </p>
+            </section>
+            
+            <hr class="border-gray-700 my-8">
+
+            <!-- Antrenamente Copii Mici -->
+            <section class="mb-12">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-blue-400 mb-4">Antrenamente pentru Copii Mici (4-8 ani)</h2>
+                        <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                            Pentru cei mai tineri "lupi", antrenamentele sunt o aventură plină de energie și joacă! Ne concentrăm pe mișcare, coordonare și dezvoltarea motricității de bază prin jocuri interactive și exerciții adaptate vârstei.
+                        </p>
+                        <ul class="list-none space-y-2 text-left text-gray-300">
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-hand-sparkles"></i></span>
+                                <span class="flex-1">**Jocuri și Distracție:** Antrenamentele noastre sunt concepute pentru a fi amuzante și captivante. Copiii învață elementele fundamentale ale sportului fără presiune.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-brain"></i></span>
+                                <span class="flex-1">**Dezvoltare Fundațională:** Lucrăm la coordonarea, echilibrul, agilitatea și rezistența, punând bazele unei vieți sănătoase și a viitoarelor performanțe.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-award"></i></span>
+                                <span class="flex-1">**Valori de Bază:** Îi învățăm pe micuți importanța respectului, a fair-play-ului și a acceptării celorlalți.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                            <!-- Imagine reprezentativa pentru copii mici. Adauga aici o cale valida catre o imagine. -->
+                            <img src="IMAGES/copii mici.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/334155/E2E8F0?text=Antrenament+Copii+Mici';" alt="Copii mici la antrenament" class="rounded-2xl shadow-lg w-full">
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-700 my-8">
+
+            <!-- Antrenamente Copii Mari -->
+            <section class="mb-12">
+                <div class="flex flex-col md:flex-row-reverse items-center justify-between gap-8">
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-blue-400 mb-4">Antrenamente pentru Copii Mari și Adolescenți (9+ ani)</h2>
+                        <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                            Pentru sportivii noștri mai mari, antrenamentele devin mai intense și mai strategice. Ne concentrăm pe rafinarea tehnicilor, pe înțelegerea tacticii de joc și pe pregătirea fizică specifică.
+                        </p>
+                        <ul class="list-none space-y-2 text-left text-gray-300">
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-fire-alt"></i></span>
+                                <span class="flex-1">**Pregătire Tehnică și Tactică:** Antrenorii noștri lucrează individual cu fiecare sportiv pentru a-i perfecționa abilitățile, de la mișcările de bază până la manevre complexe.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-dumbbell"></i></span>
+                                <span class="flex-1">**Condiție Fizică și Disciplină:** Construim forță, viteză și rezistență, dar, mai important, consolidăm disciplina și etica muncii.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-400 mr-2 mt-1"><i class="fas fa-user-friends"></i></span>
+                                <span class="flex-1">**Spirit de Echipă și Liderchip:** Jucătorii sunt încurajați să-și asume responsabilități, să se sprijine reciproc și să dezvolte abilități de lider.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <!-- Imagine reprezentativa pentru copii mari. Adauga aici o cale valida catre o imagine. -->
+                        <img src="IMAGES/adolescenti.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400/334155/E2E8F0?text=Antrenament+Adolescenti';" alt="Adolescenti la antrenament" class="rounded-2xl shadow-lg w-full">
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-700 my-8">
+
+            <!-- Sectiunea de Inscriere -->
+            <section class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Fii un Lup!</h2>
+                <p class="text-lg text-gray-400 mb-6 max-w-2xl mx-auto">
+                    La "Lupii Oasului", nu te antrenezi doar pentru a deveni un sportiv mai bun, ci și pentru a deveni o versiune mai bună a ta. Ești gata să te alături haitei și să scrii o nouă poveste de succes?
+                </p>
+                <!-- Buton de inscriere care duce la pagina de contact -->
+                <a href="contact.html" class="inline-block py-3 px-8 bg-blue-600 text-white font-bold rounded-full shadow-xl hover:bg-blue-700 transition-colors transform hover:scale-105">
+                    Înscrie-te acum și devino un Lup!
+                </a>
+            </section>
+
+            <!-- Imaginea de final -->
+            <div class="mt-12 w-full text-center">
+                <img src="IMAGES/echipa3.jpg" onerror="this.onerror=null;this.src='https://placehold.co/800x600/334155/E2E8F0?text=Echipa';" alt="Imagine cu echipa Lupii Oasului" class="rounded-3xl shadow-3xl w-full">
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru functionalitate -->
+    <script>
+        // Functia pentru a initializa preloader-ul
+        window.onload = function() {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            setTimeout(function() {
+                preloader.style.opacity = '0';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    body.style.visibility = 'visible';
+                    body.style.opacity = '1';
+                }, 500);
+            }, 1500);
+        };
+        
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                menuButton.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>

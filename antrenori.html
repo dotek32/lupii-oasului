@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIA LUPII OASULUI - ANTRENORI</title>
+    <!-- Încarcă Tailwind CSS prin CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Încarcă Font Awesome pentru iconițe sociale și meniu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Importă fontul "Inter" de la Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        /* Stiluri de bază pentru corp, pentru a evita afișarea bruscă a conținutului */
+        body {
+            font-family: 'Inter', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+            background-color: #1a202c; /* Fundal întunecat consistent */
+            color: #e2e8f0;
+        }
+
+        /* Stil pentru preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Animație pentru logo-ul preloader-ului */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Stil pentru imaginea logo din preloader */
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            animation: fadeInScale 1.5s forwards;
+        }
+
+        /* Stiluri specifice pentru slideshow */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            cursor: pointer; /* Adaugă cursor de tip mână pentru a sugera că se poate da click */
+        }
+
+        /* Butoane de navigare (next/prev) */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Punctele de navigare (dots) */
+        .dots-container {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Stiluri pentru modal/lightbox */
+        .modal {
+            display: none; /* Ascuns implicit */
+            position: fixed; /* Rămâne pe loc */
+            z-index: 10000; /* Stă deasupra tuturor */
+            padding-top: 60px; /* Loc pentru a evita coliziunea cu bara de sus */
+            left: 0;
+            top: 0;
+            width: 100%; /* Lățime completă */
+            height: 100%; /* Înălțime completă */
+            overflow: auto; /* Activează scroll dacă este necesar */
+            background-color: rgb(0,0,0); /* Fundal negru */
+            background-color: rgba(0,0,0,0.9); /* Negru cu opacitate */
+        }
+
+        /* Conținutul modalului (imaginea) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80vh;
+        }
+
+        /* Butonul de închidere */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        /* Animație pentru modal */
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        .modal-content {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        /* Stiluri pentru meniul mobil */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <!-- Am adăugat o imagine placeholder pentru logo -->
+        <img src="IMAGES/logo.png" alt="Lupii Oasului" class="logo-image mb-4 rounded-full">
+    </div>
+
+    <!-- Header & Navigație -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <!-- Am adăugat o imagine placeholder pentru logo -->
+                <img src="IMAGES/logo.png" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            <!-- Meniul pentru desktop -->
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-blue-500 font-bold transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+            <!-- Buton pentru meniul mobil (hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-100 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Meniul mobil (ascuns implicit) -->
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-2/3 bg-gray-800 shadow-lg z-40 p-6 flex flex-col items-end transform transition-transform duration-300 ease-in-out">
+            <button id="close-menu-button" class="text-gray-100 text-3xl mb-8 focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="home.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">HOME</a>
+            <a href="echipe.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">ECHIPE</a>
+            <a href="antrenori.html" class="py-2 text-blue-500 font-bold transition-colors duration-300 text-right w-full text-xl">ANTRENORI</a>
+            <a href="orar.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">ORAR</a>
+            <a href="gallery.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">GALLERY</a>
+            <a href="about.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">ABOUT</a>
+            <a href="contact.html" class="py-2 text-gray-300 hover:text-blue-500 transition-colors duration-300 text-right w-full text-xl">CONTACT</a>
+        </div>
+    </header>
+
+    <!-- Secțiunea principală cu Antrenorii -->
+    <main class="py-16 md:py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-extrabold text-blue-500">ECHIPA NOASTRĂ DE ANTRENORI</h1>
+                <p class="mt-4 text-xl text-gray-300 max-w-2xl mx-auto">
+                    Faceti cunoștință cu cei care modelează viitorii campioni.
+                </p>
+            </div>
+
+            <!-- Card Antrenor 1: Sebi -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl p-8 mb-12 flex flex-col md:flex-row items-center md:space-x-12">
+                <div class="md:w-1/3 flex justify-center mb-6 md:mb-0">
+                    <!-- Am adăugat o imagine placeholder -->
+                    <img src="IMAGES/sebi.jpg" alt="Poza Antrenor Sebi" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover border-4 border-blue-500 cursor-pointer" onclick="openModal(this)">
+                </div>
+                <div class="md:w-2/3 text-center md:text-left">
+                    <h2 class="text-4xl font-bold text-blue-400">Sebi</h2>
+                    <h3 class="text-2xl font-semibold text-gray-300 mb-4">Grupa celor mici (5-8 ani)</h3>
+                    <p class="text-gray-300">
+                        Sebi, cu o experiență vastă în lucrul cu cei mai mici fotbaliști, este antrenorul ideal pentru grupa de Pinguini. Filozofia sa se bazează pe joc și răbdare, transformând fiecare antrenament într-o activitate distractivă. Sebi îi învață pe copii elementele de bază ale fotbalului, cum ar fi coordonarea, controlul mingii și lucrul în grup, totul într-un mediu sigur și plin de veselie.
+                        <br><br>
+                        Grupa celor mici este alcătuită din cei mai tineri și entuziaști membri ai clubului. Pentru ei, fiecare antrenament este o aventură, iar meciurile sunt ocazii de a-și face prieteni noi și de a-și descoperi pasiunea pentru sport. Aici, rezultatele nu sunt la fel de importante precum participarea activă și bucuria de a juca.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card Antrenor 2: Luisien Contra -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl p-8 mb-12 flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-12">
+                <div class="md:w-1/3 flex justify-center mb-6 md:mb-0">
+                    <!-- Am adăugat o imagine placeholder -->
+                    <img src="IMAGES/luisien.jpg" alt="Poza Antrenor Luisien Contra" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover border-4 border-blue-500 cursor-pointer" onclick="openModal(this)">
+                </div>
+                <div class="md:w-2/3 text-center md:text-left">
+                    <h2 class="text-4xl font-bold text-blue-400">Luisien Contra</h2>
+                    <h3 class="text-2xl font-semibold text-gray-300 mb-4">Grupa mijlocii (7-12 ani)</h3>
+                    <p class="text-gray-300">
+                        Este un antrenor orientat spre disciplină și tehnică. El lucrează cu Grupa celor mari, o categorie de vârstă în care copiii încep să devină mai competitivi și să înțeleagă mai bine aspectele tactice ale jocului. Luisien se concentrează pe perfecționarea paselor, a driblingului și a șuturilor, introducând în același timp și noțiuni de poziționare în teren și de apărare.
+                        <br><br>
+                        Grupa celor mari este formată din viitori campioni, dornici să-și depășească limitele. Antrenamentele sunt mai structurate, iar meciurile devin o ocazie de a pune în practică abilitățile învățate. Cu toate acestea, Andrei se asigură că spiritul de fair-play rămâne o prioritate absolută.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card Antrenor 3: Laur Nemes -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl p-8 flex flex-col md:flex-row items-center md:space-x-12">
+                <div class="md:w-1/3 flex justify-center mb-6 md:mb-0">
+                    <!-- Am adăugat o imagine placeholder -->
+                    <img src="IMAGES/laur.jpg" alt="Poza Antrenor Laur Nemes" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover border-4 border-blue-500 cursor-pointer" onclick="openModal(this)">
+                </div>
+                <div class="md:w-2/3 text-center md:text-left">
+                    <h2 class="text-4xl font-bold text-blue-400">Laur Nemes</h2>
+                    <h3 class="text-2xl font-semibold text-gray-300 mb-4">Grupa celor mari (10-15 ani)</h3>
+                    <p class="text-gray-300">
+                        Indrumând Grupa celor mari, tinerii care se pregătesc pentru competițiile la nivel avansat. Cu o abordare strategică și o vastă cunoaștere a fotbalului modern, Laur se concentrează pe tactici complexe, pe pregătirea fizică specifică și pe aspectele psihologice ale jocului.
+                        <br><br>
+                        Echipa celor mari este o echipă de performanță, cu un program intens de antrenament și cu participări regulate la turnee regionale și naționale. Cu toate că munca este serioasă, Laur menține o legătură strânsă cu fiecare jucător, oferindu-i sprijinul și încrederea necesară pentru a atinge succesul.
+                        <br><br>
+                        Fiecare antrenor contribuie la crearea unui mediu echilibrat, unde copiii pot crește și se pot dezvolta atât ca fotbaliști, cât și ca oameni.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <!-- Slideshow Section -->
+    <section class="py-16 md:py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-blue-500 mb-8">Galerie foto</h2>
+            
+            <!-- Slideshow Container -->
+            <div class="slideshow-container">
+                <!-- Am înlocuit imaginile cu placeholder-uri -->
+                <div class="mySlides fade">
+                    <img src="IMAGES/copii mici.jpg" alt="Imagine antrenament 1" onclick="openModal(this)">
+                </div>
+                <div class="mySlides fade">
+                    <img src="IMAGES/adolescenti.jpg" alt="Imagine antrenament 2" onclick="openModal(this)">
+                </div>
+                <div class="mySlides fade">
+                    <img src="IMAGES/laur cu echipa.jpg" alt="Imagine antrenament 3" onclick="openModal(this)">
+                </div>
+                <div class="mySlides fade">
+                    <img src="IMAGES/antrenori.jpg" alt="Imagine antrenament 4" onclick="openModal(this)">
+                </div>
+                <!-- Butoane de navigare -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+
+            <!-- Puncte de navigare sub slideshow -->
+            <div class="dots-container">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal (Lightbox) -->
+    <div id="myModal" class="modal">
+        <!-- Buton de închidere -->
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <!-- Conținutul modalului (imaginea mare) -->
+        <img class="modal-content" id="img01">
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru a ascunde preloader-ul, pentru meniul mobil, slideshow și modal -->
+    <script>
+        window.onload = function() {
+            // Logica pentru preloader
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+            
+            setTimeout(function() {
+                preloader.style.opacity = '0';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    body.style.visibility = 'visible';
+                    body.style.opacity = '1';
+                }, 500);
+            }, 1500);
+
+            // Inițializarea slideshow-ului
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            // Funcția pentru a naviga la următorul/anteriorul slide
+            window.plusSlides = function(n) {
+                showSlides(slideIndex += n);
+            }
+
+            // Funcția pentru a naviga la un slide specific
+            window.currentSlide = function(n) {
+                showSlides(slideIndex = n);
+            }
+
+            // Funcția principală care afișează slide-urile
+            function showSlides(n) {
+                let i;
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+                if (n > slides.length) {slideIndex = 1} 
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none"; 
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex-1].style.display = "block"; 
+                dots[slideIndex-1].className += " active";
+            }
+
+            // Funcția pentru a deschide modalul cu imaginea selectată
+            window.openModal = function(element) {
+                const modal = document.getElementById("myModal");
+                const modalImg = document.getElementById("img01");
+                modal.style.display = "block";
+                modalImg.src = element.src;
+            }
+
+            // Funcția pentru a închide modalul
+            window.closeModal = function() {
+                const modal = document.getElementById("myModal");
+                modal.style.display = "none";
+            }
+
+            // Logica pentru meniul mobil
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuButton = document.getElementById('close-menu-button');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+            });
+
+            closeMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+
+            // Închide meniul mobil dacă se dă click în afara lui
+            window.addEventListener('click', (event) => {
+                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

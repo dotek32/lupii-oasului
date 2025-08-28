@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIA LUPII OASULUI - PROGRAM</title>
+    <!-- Încarcă Tailwind CSS prin CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Importă fontul "Inter" de la Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        /* Stiluri de bază pentru corp */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b111a;
+            color: #d1d5db;
+        }
+
+        /* Stiluri specifice pentru tabel */
+        .table-container {
+            background-color: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #374151;
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        th {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #111827;
+        }
+
+        .header-cell {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .logo-row {
+            background-color: #1f2937;
+            border: none;
+        }
+
+        .logo-row td {
+            padding: 0;
+            border: none;
+        }
+
+        .schedule-title {
+            background-color: #374151;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .schedule-subtitle {
+            background-color: #374151;
+            color: #9ca3af;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .group-cell {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Culoarea pentru celulele cu conținut */
+        .schedule-data {
+            background-color: #1c2b42;
+            color: #d1d5db;
+            font-weight: bold;
+        }
+
+        .premium-text {
+            color: #9ca3af;
+            font-style: italic;
+            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        /* Stiluri pentru culorile grupelor */
+        .dot {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+
+        .dot-yellow { background-color: #f50b0b; }
+        .dot-orange { background-color: #f97316; }
+        .dot-blue { background-color: #2563eb; }
+        .dot-red { background-color: #ef4444; }
+        .dot-purple { background-color: #a855f7; }
+
+        /* Iconițe în celule */
+        .icon-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+    <!-- Adăugăm Font Awesome prin CDN pentru a afișa iconițe precum cele de social media și meniul hamburger -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Header & Navigație -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <img src="IMAGES/logo.png" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            <!-- Meniu desktop -->
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-blue-500 font-bold transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+
+            <!-- Buton meniu mobil (hamburger) - se afișează doar pe ecranele mici -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-blue-500 focus:outline-none focus:text-blue-500 transition-colors duration-300">
+                <i class="fas fa-bars fa-2x"></i>
+            </button>
+        </nav>
+        
+        <!-- Meniu mobil - inițial ascuns -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 shadow-xl transition-all duration-300 ease-in-out">
+            <div class="flex flex-col items-center py-4 space-y-4">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ANTRENORI</a>
+                <a href="orar.html" class="text-blue-500 font-bold transition-colors duration-300 w-full text-center py-2">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">CONTACT</a>
+            </div>
+        </div>
+    </header>
+
+<body class="bg-gray-900 text-gray-100 antialiased flex flex-col items-center justify-center min-h-screen p-4">
+<br>
+    <!-- Container principal -->
+    <div class="table-container max-w-7xl w-full mx-auto">
+        <table>
+            <!-- Rând pentru titlu și logo -->
+            <thead>
+                <tr>
+                    <td colspan="2" class="logo-row">
+                        <img src="IMAGES/logo.png" alt="Logo Lupii Oasului" class="mx-auto w-20 h-20">
+                    </td>
+                    <td colspan="4" class="schedule-title">PROGRAM LUPII OASULUI</td>
+                    <td colspan="2" class="logo-row">
+                        <img src="IMAGES/logo.png" alt="Logo Lupii Oasului" class="mx-auto w-20 h-20">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="schedule-subtitle">SĂPTĂMÂNA 11.08 - 17.08.2025</td>
+                </tr>
+                <tr class="header-row">
+                    <th>GRUPA</th>
+                    <th>LUNI</th>
+                    <th>MARȚI</th>
+                    <th>MIERCURI</th>
+                    <th>JOI</th>
+                    <th>VINERI</th>
+                    <th>SÂMBĂTĂ</th>
+                    <th>DUMINICĂ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="group-cell">GK</td>
+                    <td></td>
+                    <td>8:30</td>
+                    <td>8:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell">INDIVIDUAL</td>
+                    <td>9:30</td>
+                    <td></td>
+                    <td>9:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2013/2014 <span class="dot dot-yellow"></span></td>
+                    <td>10:30</td>
+                    <td></td>
+                    <td>10:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2015/2016 <span class="dot dot-orange"></span></td>
+                    <td></td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2016 <span class="dot dot-blue"></span></td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td>8:30</td>
+                    <td></td>
+                    <td>17:45</td>
+                    <td class="bg-blue-600 text-white">
+                        <div class="icon-cell">
+                             <span style="font-size: 1.5rem;">👑</span>
+                             <span style="font-size: 1.5rem;">👑</span>
+                             10:00
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2017 <span class="dot dot-blue"></span></td>
+                    <td>19:00</td>
+                    <td></td>
+                    <td>9:30</td>
+                    <td></td>
+                    <td>19:00</td>
+                    <td class="bg-blue-600 text-white">
+                        <div class="icon-cell">
+                             <span style="font-size: 1.5rem;">👑</span>
+                             <span style="font-size: 1.5rem;">👑</span>
+                             8:30
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2017 <span class="dot dot-orange"></span></td>
+                    <td></td>
+                    <td>19:00</td>
+                    <td></td>
+                    <td>19:00</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2018 <span class="dot dot-red"></span></td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td>9:00</td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2019 <span class="dot dot-red"></span></td>
+                    <td>19:00</td>
+                    <td></td>
+                    <td></td>
+                    <td>19:00</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-cell flex items-center justify-start">2020 <span class="dot dot-purple"></span></td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td>9:00</td>
+                    <td>17:45</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <!-- Footer -->
+ <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- Script pentru a gestiona meniul mobil -->
+    <script>
+        // Obținem referința la butonul și la meniul mobil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Adăugăm un "listener" pentru evenimentul de clic
+        mobileMenuButton.addEventListener('click', () => {
+            // Togglem clasa 'hidden' pentru a afișa sau ascunde meniul
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

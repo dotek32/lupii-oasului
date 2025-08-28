@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <!-- Incarca Tailwind CSS prin CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incarca Font Awesome pentru iconite sociale si meniul hamburger -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+            background-color: #1a202c;
+            /* Background intunecat pentru a se potrivi cu stilul original */
+            color: #e2e8f0;
+        }
+
+        /* Stil pentru preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Stil pentru imaginea logo din preloader */
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            animation: fadeInScale 1.5s forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hero-section {
+            background-image: url('IMAGES/LUPI HERO.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 6, 23, 0.7);
+            z-index: -1;
+        }
+
+        /* Animație pentru meniul mobil */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Stilul aplicat meniului mobil când este vizibil */
+        .mobile-menu-active {
+            display: block;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        /* Ascunde meniul mobil implicit */
+        #mobile-menu {
+            display: none;
+        }
+
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .match-result-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .match-result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stiluri pentru sectiunea de countdown */
+        .countdown-box {
+            background: rgba(45, 55, 72, 0.8);
+            /* Gri inchis semi-transparent */
+            border: 2px solid #3182ce;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
+        <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/100x100/5e5d5d/FFFFFF?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+    </div>
+
+    <!-- Header & Navigatie -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
+                <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/5e5d5d/FFFFFF?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-blue-500 font-bold transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+
+            <!-- Buton meniu mobil (hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-blue-500 focus:outline-none focus:text-blue-500 transition-colors duration-300">
+                <i class="fas fa-bars fa-2x"></i>
+            </button>
+        </nav>
+
+        <!-- Meniu mobil -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-gray-900 shadow-xl hidden">
+            <div class="flex flex-col items-center py-4 space-y-4">
+                <a href="home.html" class="text-blue-500 font-bold transition-colors duration-300 w-full text-center py-2">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">CONTACT</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sectiune Hero -->
+    <main class="hero-section flex items-center justify-center">
+        <div class="text-center text-white px-4">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 animate-pulse">LUPII OASULUI </h1>
+
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="about.html" class="cta-button bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
+                    <span>DESPRE NOI</span>
+                </a>
+                <a href="contact.html" class="cta-button bg-gray-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-600">
+                    <span>INSCRIERE</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sectiune "Despre Noi" -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="md:w-1/2">
+                    <img src="IMAGES/parteneriat.jpg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/374151/FFFFFF?text=Parteneriat';" alt="O descriere a echipei de fotbal" class="w-full rounded-lg shadow-lg">
+                </div>
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-4xl font-extrabold text-blue-500 mb-4">DESPRE FOTBALUL NOSTRU</h2>
+                    <h3 class="text-3xl font-bold mb-4">Descrierea Echipelor și Antrenorilor</h3>
+                    <p class="text-gray-300 mb-6">
+                        Clubul nostru de fotbal este dedicat dezvoltării tinerilor sportivi, punând accentul pe bucuria jocului, pe spiritul de echipă și pe o pregătire tehnică adaptată fiecărei grupe de vârstă. Lucrăm cu trei antrenori pasionați, fiecare specializat pe o anumită categorie de vârstă, pentru a asigura o evoluție constantă și armonioasă a copiilor.
+                    </p>
+                    <a href="about.html" class="cta-button inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
+                        <span>read more</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectiune Countdown meci -->
+    <section class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold mb-8"> U Cluj <span class="text-blue-500">VS</span> Grupa 2016</h2>
+            <p class="text-lg text-gray-300 mb-12">
+                Weekendul trecut, grupa 2016 🔵 a petrecut 3 zile la Cluj într-o experiență completă! Sport Festival Cup
+                Micii noștri lupi au avut ocazia să se dueleze cu adversari de renume precum U Cluj și CFR Cluj, dar și cu echipe consacrate la nivel juvenil, precum Sporting Cluj și ACSP Chinteni.
+                Dincolo de fotbal, a fost o călătorie a dezvoltării: copiii au învățat, s-au legat mai strâns ca echipă și au trăit din plin emoțiile unei aventuri departe de casă.
+            </p>
+            <h1>URMATORUL MECI</h1>
+            <p class="text-lg text-gray-300 mb-12"></p>
+            <div id="countdown" class="flex justify-center space-x-6">
+                <div class="countdown-box p-6 rounded-lg">
+                    <div id="days" class="countdown-number text-blue-400 font-bold">00</div>
+                    <div class="text-sm font-semibold text-gray-400">ZILE</div>
+                </div>
+                <div class="countdown-box p-6 rounded-lg">
+                    <div id="hours" class="countdown-number text-blue-400 font-bold">00</div>
+                    <div class="text-sm font-semibold text-gray-400">ORE</div>
+                </div>
+                <div class="countdown-box p-6 rounded-lg">
+                    <div id="minutes" class="countdown-number text-blue-400 font-bold">00</div>
+                    <div class="text-sm font-semibold text-gray-400">MINUE</div>
+                </div>
+                <div class="countdown-box p-6 rounded-lg">
+                    <div id="seconds" class="countdown-number text-blue-400 font-bold">00</div>
+                    <div class="text-sm font-semibold text-gray-400">SECUNDE</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectiune Ultimele Rezultate -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-blue-500">ULTIMELE REZULTATE</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Exemplu de card de rezultat -->
+                <div class="match-result-card bg-gray-800 p-8 rounded-lg shadow-xl text-center">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="text-center">
+                            <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/374151/FFFFFF?text=Team';" alt="Team 1 Logo" class="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-gray-600">
+                            <h4 class="text-xl font-bold text-gray-200">Echipa 2016</h4>
+                            <span class="text-green-500 font-semibold">(Castig)</span>
+                        </div>
+                        <div class="text-4xl font-extrabold text-blue-400">
+                            3 - 1
+                        </div>
+                        <div class="text-center">
+                            <img src="https://placehold.co/60x60/4a5568/ffffff?text=TEAM" alt="Team 2 Logo" class="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-gray-600">
+                            <h4 class="text-xl font-bold text-gray-200">U Cluj</h4>
+                            <span class="text-red-500 font-semibold">(Pierdut)</span>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-gray-400 list-none p-0 m-0">
+                        <li>Roman Fenley (15')</li>
+                        <li>Miguel Beckel (19')</li>
+                        <li>Jonah Jolicoeur (39')</li>
+                    </ul>
+                </div>
+                <!-- Poti adauga mai multe carduri similare aici -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru functionalitate -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logica pentru meniul mobil
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('mobile-menu-active');
+            });
+
+            // Functia pentru a initializa preloader-ul
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    body.style.visibility = 'visible';
+                    body.style.opacity = '1';
+                }, 500);
+            }, 1500);
+
+            // Functia pentru countdown
+            const countDownDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000); // Exemplu: 7 zile de acum
+
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                // Corectie: Am inlocuit Math.or cu Math.floor pentru a rezolva eroarea.
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+                document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+                document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+                document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("countdown").innerHTML = "Meciul a inceput!";
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

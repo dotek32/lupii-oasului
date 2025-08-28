@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Lupii Oasului</title>
+    <!-- Încarcă Tailwind CSS prin CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Încarcă Font Awesome pentru iconițe sociale -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            animation: fadeInScale 1.5s forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .social-icon {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .social-icon.facebook:hover { color: #1877F2; }
+        .social-icon.instagram:hover { color: #E1306C; }
+        .social-icon.twitter:hover { color: #1DA1F2; }
+        .social-icon.tiktok:hover { color: #69C9D0; }
+
+        .shadow-3xl {
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5), 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
+        <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/100x100/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+    </div>
+
+    <!-- Header & Navigație -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
+                <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/40x40/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            
+            <!-- Navigație pentru desktop (vizibilă doar pe ecrane mari) -->
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-blue-500 font-bold transition-colors duration-300">CONTACT</a>
+            </div>
+
+            <!-- Buton pentru meniul mobil (vizibil doar pe ecrane mici) -->
+            <button id="menu-button" class="md:hidden text-gray-300 hover:text-blue-500 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <!-- Meniul mobil (ascuns implicit) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 px-4 pt-2 pb-4">
+            <nav class="flex flex-col space-y-2">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ORAR</a>
+                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ABOUT</a>
+                <a href="contact.html" class="text-blue-500 font-bold py-2 transition-colors duration-200">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="flex items-center justify-center py-12 md:py-20 p-4">
+        <!-- Container principal, stilat pentru a se potrivi cu pagina anterioară -->
+        <div class="bg-gray-800 p-8 rounded-3xl shadow-3xl w-full max-w-4xl">
+            <h1 class="text-4xl md:text-5xl font-bold text-center text-white mb-6">Contactați-ne</h1>
+            <p class="text-center text-gray-400 mb-8">
+                Pentru orice întrebări sau informații suplimentare, ne puteți contacta folosind detaliile de mai jos sau prin completarea formularului.
+            </p>
+
+            <!-- Detalii de contact și social media -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                <!-- Informații de contact -->
+                <div class="bg-gray-700 p-6 rounded-2xl shadow-inner">
+                    <h2 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-info-circle mr-3 text-blue-400"></i>
+                        Informații de contact
+                    </h2>
+                    <ul class="space-y-3 text-gray-300">
+                        <div class="p-8 rounded-lg shadow-lg bg-gray-800 max-w-lg mx-auto">
+        <h1 class="text-3xl font-bold mb-4 text-center">Trimite un email</h1>
+        <p class="text-center mb-6 text-gray-400">Apasă pe link pentru a deschide clientul de email.</p>
+        <div class="flex items-center justify-center">
+            <!-- Link-ul actualizat cu mailto: -->
+            <a href="mailto:office@lupiioasului.com?subject=Intrebare%20de%20la%20site&body=Buna%20ziua,%20as%20dori%20sa%20aflu%20mai%20multe%20informatii%20despre..." class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center">
+                <i class="fas fa-envelope mr-2"></i>
+                Trimite email
+            </a>
+        </div>
+        <p class="mt-4 text-sm text-gray-500 text-center">Acest link va deschide aplicația ta de email implicită.</p>
+    </div>
+
+                        <li>
+                            <i class="fas fa-envelope mr-2 text-gray-500"></i>
+                            <a href="mailto:contact@exemplu.com" class="hover:underline">laur.business.13@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone mr-2 text-gray-500"></i>
+                            <a href="tel:+40751058502" class="hover:underline">+40751058502</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt mr-2 text-gray-500"></i>
+                            Strada Tineretului 803, Vama 447350
+                        </li>
+                        <li>
+                            <i class="fas fa-clock mr-2 text-gray-500"></i>
+                            Luni - Vineri: 09:00 - 20.00
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Harta și social media -->
+                <div class="space-y-6">
+                    <!-- Harta Google Maps -->
+                    <div class="rounded-2xl overflow-hidden shadow-inner">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2677.829151237819!2d23.394824899999996!3d47.8429031!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4737ede56bd4c67b%3A0xe5d55ab9a30098ac!2zxaNcoalaY29sYSBDdSBjbGFzZWxlIEl-VklJIFZhbWE!5e0!3m2!1sen!2sro!4v1756118669189!5m2!1sen!2sro" 
+                                width="100%" 
+                                height="450" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <!-- Rețele sociale -->
+                    <div class="bg-gray-700 p-6 rounded-2xl shadow-inner">
+                        <h2 class="text-2xl font-semibold text-white mb-4 text-center">Urmăriți-ne pe Social Media</h2>
+                        <div class="flex justify-center space-x-6 text-3xl">
+                            <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru functionalitate -->
+    <script>
+        // Functia pentru a initializa preloader-ul
+        window.onload = function() {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            setTimeout(function() {
+                preloader.style.opacity = '0';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    body.style.visibility = 'visible';
+                    body.style.opacity = '1';
+                }, 500);
+            }, 1500);
+        };
+        
+        // Ascultă evenimentul de încărcare a documentului pentru a inițializa meniul de mobil.
+        // Când se dă clic pe butonul cu 3 linii (menu-button), clasa 'hidden' este adăugată sau eliminată
+        // de pe meniul mobil, făcându-l vizibil sau invizibil.
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

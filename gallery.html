@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie Foto și Video</title>
+    <!-- Incarca Tailwind CSS pentru stilizare -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incarca fontul Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Iconite pentru butonul de redare -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease-in-out;
+            background-color: #1a202c; /* Fundal intunecat */
+            color: #e2e8f0; /* Text deschis */
+        }
+
+        /* Stil pentru preloader (similar cu cel din exemplul tau) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Stil pentru imaginea logo din preloader */
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            animation: fadeInScale 1.5s forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .social-icon {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .social-icon.facebook:hover { color: #1877F2; }
+        .social-icon.instagram:hover { color: #E1306C; }
+        .social-icon.twitter:hover { color: #1DA1F2; }
+        .social-icon.tiktok:hover { color: #69C9D0; }
+        
+        .shadow-3xl {
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5), 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Stil pentru modal (fereastra pop-up) */
+        .modal {
+            display: none; /* Ascuns implicit */
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        /* Stil pentru a face cursorul sa arate ca o manuta pe elementele din galerie */
+        .gallery-item {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 9999px;
+            padding: 1.5rem;
+            color: white;
+            transition: background-color 0.3s, opacity 0.3s;
+            opacity: 0;
+        }
+
+        .gallery-item:hover .play-button-overlay, .gallery-item[data-type*="video"] .play-button-overlay {
+            opacity: 1;
+        }
+        .gallery-item:hover .play-button-overlay {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center">
+        <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/100x100/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+    </div>
+
+    <!-- Header & Navigatie -->
+    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
+                <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/40x40/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
+                <span class="text-blue-500">Lupii Oasului</span>
+            </a>
+            <div class="space-x-8 hidden md:flex">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="text-blue-500 font-bold transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </div>
+            <!-- Meniu pentru mobil -->
+            <button id="menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 px-4 pt-2 pb-4">
+            <nav class="flex flex-col space-y-2">
+                <a href="home.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">HOME</a>
+                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ECHIPE</a>
+                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ANTRENORI</a>
+                <a href="orar.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ORAR</a>
+                <a href="gallery.html" class="text-blue-500 font-bold py-2 transition-colors duration-200">GALLERY</a>
+                <a href="about.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ABOUT</a>
+                <a href="contact.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <br>
+    
+    <!-- Container principal pentru galerie -->
+    <div class="max-w-7xl mx-auto p-8">
+        <!-- Titlu si descriere -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-blue-500 mb-2">Galeria Noastră</h1>
+            <p class="text-lg text-gray-400">O colecție de momente speciale, surprinse în imagini și videoclipuri.</p>
+        </header>
+
+        <!-- Grila pentru galerie. Foloseste clasa 'gallery-item' pentru JS. -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+
+            <!-- Element video LOCAL 1 cu previzualizare -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/lectia 1.mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/lectia 1.mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Element imagine 1 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="IMAGES/cu camy.jpg">
+                <img src="IMAGES/cu camy.jpg" alt="O imagine de la un eveniment special." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+1';">
+            </div>
+
+            <!-- Element video LOCAL 2 cu previzualizare -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/lectia 2.mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/lectia 2.mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Element imagine 2 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="images/echipa 2.jpg">
+                <img src="IMAGES/echipa 2.jpg" alt="O imagine din vacanță." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+2';">
+            </div>
+            
+            <!-- Element imagine 3 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="IMAGES/echipa.jpg">
+                <img src="IMAGES/echipa.jpg" alt="Un portret." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+3';">
+            </div>
+
+          
+            <!-- Element imagine 2 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="images/echipa 2.jpg">
+                <img src="IMAGES/poza 2.jpg" alt="O imagine din vacanță." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+2';">
+            </div>
+            
+            <!-- Element imagine 4 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="IMAGES/laur cu echipa.jpg">
+                <img src="IMAGES/laur cu echipa.jpg" alt="O imagine de la un eveniment special." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+4';">
+            </div>
+
+            <!-- Element imagine 5 -->
+            <div class="rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 gallery-item" data-type="image" data-src="IMAGES/camy.jpg">
+                <img src="IMAGES/camy.jpg" alt="O imagine de la un eveniment special." class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/5e5d5d/FFFFFF?text=Image+5';">
+            </div>
+
+            <!-- Videoclipul Download.mp4 -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/Download.mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/Download.mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videoclipul Download (1).mp4 -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/Download (1).mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/Download (1).mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videoclipul Download (2).mp4 -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/Download (2).mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/Download (2).mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videoclipul Download (3).mp4 -->
+            <div class="relative overflow-hidden rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105 bg-black gallery-item group" data-type="local-video" data-src="video/Download (3).mp4">
+                <div class="h-0 pb-[56.25%]">
+                    <video muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                        <source src="video/Download (3).mp4" type="video/mp4">
+                        Browserul tau nu suporta video.
+                    </video>
+                    <div class="play-button-overlay flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-play text-4xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <hr class="border-gray-700 my-12">
+
+    <!-- Modal (fereastra pop-up) pentru a afisa imaginea sau video-ul mare -->
+    <div id="modal" class="modal fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div class="relative modal-content">
+            <!-- Container pentru video sau imagine -->
+            <div id="modal-content-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
+                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pentru a gestiona modal-ul -->
+    <script>
+        window.onload = function() {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            // Ascunde preloader-ul dupa 1.5 secunde
+            setTimeout(function() {
+                preloader.style.opacity = '0';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    body.style.visibility = 'visible';
+                    body.style.opacity = '1';
+                }, 500);
+            }, 1500);
+        };
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logica pentru meniul de mobil
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                // Toggla clasa 'hidden' pentru a afisa sau ascunde meniul mobil
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Selecteaza toate elementele din galerie
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('modal');
+            const modalContentContainer = document.getElementById('modal-content-container');
+            const videos = document.querySelectorAll('video');
+
+            // Porneste videoclipurile in miniatura
+            videos.forEach(video => {
+                video.play();
+            });
+
+            // Adauga un eveniment de click pentru fiecare element din galerie
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    const src = this.dataset.src;
+
+                    // Curata continutul modalului inainte de a afisa altceva
+                    modalContentContainer.innerHTML = '';
+                    
+                    // Opreste toate videoclipurile inainte de a deschide modalul
+                    videos.forEach(video => video.pause());
+
+                    // In functie de tipul elementului, creeaza continutul corespunzator
+                    if (type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = 'Imagine marita';
+                        img.classList.add('rounded-xl', 'max-w-full', 'max-h-full');
+                        modalContentContainer.appendChild(img);
+                    } else if (type === 'youtube-video') {
+                        const iframe = document.createElement('iframe');
+                        iframe.src = src + '?autoplay=1';
+                        iframe.title = 'Video YouTube';
+                        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                        iframe.allowFullscreen = true;
+                        iframe.classList.add('w-full', 'h-full', 'rounded-xl');
+
+                        const iframeContainer = document.createElement('div');
+                        iframeContainer.classList.add('relative', 'w-[80vw]', 'h-0', 'pb-[56.25%]'); // 16:9 ratio
+                        iframeContainer.appendChild(iframe);
+                        
+                        modalContentContainer.appendChild(iframeContainer);
+                    } else if (type === 'local-video') {
+                        const video = document.createElement('video');
+                        video.src = src;
+                        video.controls = true; // Adaugam butoane de control
+                        video.autoplay = true; // Pornim automat
+                        video.loop = true; // Rulam in bucla
+                        video.classList.add('w-full', 'h-full', 'rounded-xl', 'max-w-full', 'max-h-full', 'object-contain');
+
+                        const videoContainer = document.createElement('div');
+                        videoContainer.classList.add('relative', 'w-[80vw]', 'max-w-5xl', 'h-auto', 'aspect-video');
+                        videoContainer.appendChild(video);
+                        
+                        modalContentContainer.appendChild(videoContainer);
+                    }
+
+                    // Afiseaza modalul
+                    modal.style.display = 'flex';
+                });
+            });
+
+            // Inchide modalul cand se da click in afara imaginii
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    modalContentContainer.innerHTML = ''; // Opreste video-ul la inchidere
+                    
+                    // Reporneste videoclipurile in miniatura
+                    videos.forEach(video => video.play());
+                }
+            });
+        });
+    </script>
+</body>
+</html>
