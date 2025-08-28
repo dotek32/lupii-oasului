@@ -2,7 +2,6 @@
 <html lang="ro">
 
 <head>
-    <meta name="google-site-verification" content="1s-DEfta_G3aLbZParCdWKyJ_qO4q4PNvclmpKVF2i8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME PAGE</title>
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        
 
         body {
             font-family: 'Inter', sans-serif;
@@ -62,10 +60,24 @@
             background-image: url('IMAGES/LUPI HERO.jpg');
             background-repeat: no-repeat;
             background-position: center;
-            background-size: cover;
+            /* background-size: cover; */
+            /* Solutia - schimba "cover" cu "contain" pentru a se incadra complet */
+            background-size: contain;
+            /* Adauga un background fallback in caz ca imaginea are zone transparente */
+            background-color: #000; 
             height: 100vh;
             position: relative;
             z-index: 1;
+
+            /* Media query pentru ecrane mai mici (mobile) */
+            @media (max-width: 768px) {
+                /* Asigura ca imaginea se adapteaza complet la inaltimea ecranului */
+                height: 100vh;
+                /* Asigura ca imaginea nu este distorsionata */
+                background-size: contain;
+                /* Centreaza imaginea atat pe orizontala, cat si pe verticala */
+                background-position: center;
+            }
         }
 
         .hero-section::before {
@@ -77,30 +89,6 @@
             height: 100%;
             background-color: rgba(2, 6, 23, 0.7);
             z-index: -1;
-        }
-
-        /* Animație pentru meniul mobil */
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Stilul aplicat meniului mobil când este vizibil */
-        .mobile-menu-active {
-            display: block;
-            animation: slideDown 0.3s ease-out forwards;
-        }
-
-        /* Ascunde meniul mobil implicit */
-        #mobile-menu {
-            display: none;
         }
 
         .cta-button {
@@ -131,6 +119,16 @@
         .countdown-number {
             font-size: 3rem;
         }
+
+        /* Stiluri specifice pentru meniul mobil */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
     </style>
 </head>
 
@@ -167,16 +165,21 @@
         </nav>
 
         <!-- Meniu mobil -->
-        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-gray-900 shadow-xl hidden">
-            <div class="flex flex-col items-center py-4 space-y-4">
-                <a href="home.html" class="text-blue-500 font-bold transition-colors duration-300 w-full text-center py-2">HOME</a>
-                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ECHIPE</a>
-                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ANTRENORI</a>
-                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ORAR</a>
-                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">GALLERY</a>
-                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">ABOUT</a>
-                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300 w-full text-center py-2">CONTACT</a>
-            </div>
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-900 shadow-xl z-50 p-6 flex flex-col items-center pt-20">
+            <button id="close-menu-button" class="absolute top-4 right-4 text-gray-100 hover:text-red-500 transition-colors duration-300">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-8 text-center text-lg">
+                <a href="home.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
+                <a href="echipe.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
+                <a href="antrenori.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
+                <a href="orar.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
+                <a href="gallery.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
+                <a href="about.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
+                <a href="contact.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            </nav>
         </div>
     </header>
 
@@ -290,8 +293,8 @@
             <div class="flex justify-center space-x-6 mb-4">
                 <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
                 <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
             </div>
             <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate 2025</p>
         </div>
@@ -305,7 +308,21 @@
             const mobileMenu = document.getElementById('mobile-menu');
 
             mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('mobile-menu-active');
+                mobileMenu.classList.toggle('open');
+            });
+            
+            // Adaugă un nou buton pentru închiderea meniului și logica aferentă
+            const closeMenuButton = document.getElementById('close-menu-button');
+            closeMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+
+            // Adaugă un eveniment de click pentru a închide meniul la selectarea unui link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
             });
 
             // Functia pentru a initializa preloader-ul
@@ -349,6 +366,3 @@
 </body>
 
 </html>
-
-
-
