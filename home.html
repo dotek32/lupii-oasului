@@ -60,21 +60,20 @@
             background-image: url('IMAGES/LUPI HERO.jpg');
             background-repeat: no-repeat;
             background-position: center;
-            /* background-size: cover; */
-            /* Solutia - schimba "cover" cu "contain" pentru a se incadra complet */
-            background-size: contain;
-            /* Adauga un background fallback in caz ca imaginea are zone transparente */
-            background-color: #000; 
+            background-size: cover;
             height: 100vh;
             position: relative;
             z-index: 1;
+        }
 
-            /* Media query pentru ecrane mai mici (mobile) */
-            @media (max-width: 768px) {
+        /* Media query pentru ecrane mai mici (mobile) */
+        @media (max-width: 768px) {
+            .hero-section {
                 /* Asigura ca imaginea se adapteaza complet la inaltimea ecranului */
-                height: 100vh;
-                /* Asigura ca imaginea nu este distorsionata */
+                height: 50vh;
+                /* Asigura ca imaginea nu este decupata */
                 background-size: contain;
+                background-repeat: no-repeat;
                 /* Centreaza imaginea atat pe orizontala, cat si pe verticala */
                 background-position: center;
             }
