@@ -221,12 +221,16 @@
     <!-- Sectiune Countdown meci -->
     <section class="py-20 bg-gray-800">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-extrabold mb-8"> U Cluj <span class="text-blue-500">VS</span> Grupa 2016</h2>
+            <h2 class="text-4xl font-extrabold mb-8"> LUPII OASULUI 2017 <span class="text-blue-500">VS </span> SOMESUL SATU MARE 2010</h2>
             <p class="text-lg text-gray-300 mb-12">
-                Weekendul trecut, grupa 2016 🔵 a petrecut 3 zile la Cluj într-o experiență completă! Sport Festival Cup
-                Micii noștri lupi au avut ocazia să se dueleze cu adversari de renume precum U Cluj și CFR Cluj, dar și cu echipe consacrate la nivel juvenil, precum Sporting Cluj și ACSP Chinteni.
-                Dincolo de fotbal, a fost o călătorie a dezvoltării: copiii au învățat, s-au legat mai strâns ca echipă și au trăit din plin emoțiile unei aventuri departe de casă.
-            </p>
+                Un meci de poveste în Cupa Juniorilor: Lupii Oasului 2017 vs. Someșul 2010 Satu Mare
+În inima județului Satu Mare, acolo unde pasiunea pentru fotbal este mai presus de orice, se pregătește un meci care va rămâne mult timp în amintirea suporterilor: tinerii "Lupi ai Oașului" din generația 2017 se vor duela cu redutabila echipă a clubului Someșul 2010 Satu Mare.
+
+Această confruntare este mai mult decât un simplu meci amical. Este o întâlnire între două generații de excepție, un test al curajului și al ambiției pentru micuții fotbaliști din Oaș, care vor înfrunta adversari mai experimentați și mai maturi. Diferența de vârstă este o provocare majoră, dar pentru Lupii Oasului, fiecare meci este o ocazie de a învăța, de a crește și de a demonstra că talentul și inima mare pot depăși orice obstacol.
+
+Sub privirile atente ale antrenorilor și a suporterilor, cele două echipe vor scrie un nou capitol în istoria fotbalului juvenil din regiune. Va fi o demonstrație de tehnică, strategie și, mai ales, de fair-play. Lupii sunt gata să lupte pentru fiecare minge, pentru fiecare metru de teren, animați de dorința de a-și depăși limitele și de a-i face mândri pe cei care îi susțin.
+
+Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii sportivi, care vor înțelege că fotbalul este despre muncă, respect și, cel mai important, despre bucuria de a fi o echipă.
             <h1>URMATORUL MECI</h1>
             <p class="text-lg text-gray-300 mb-12"></p>
             <div id="countdown" class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -293,11 +297,8 @@
                 <a href="https://www.facebook.com/profile.php?id=61574498644355" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
-                
             </div>
-            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate.</p>
-            
-
+            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate 2025</p>
         </div>
     </footer>
 
@@ -340,7 +341,12 @@
             }, 1500);
 
             // Functia pentru countdown
-            const countDownDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000); // Exemplu: 7 zile de acum
+            // Seteaza data si ora tinta la 18:00 (6 PM) mâine
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(now.getDate() + 1);
+            tomorrow.setHours(18, 0, 0, 0); // Seteaza ora la 18:00 (18:00)
+            const countDownDate = tomorrow.getTime();
 
             const countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
@@ -348,7 +354,6 @@
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                // Corectie: Am inlocuit Math.or cu Math.floor pentru a rezolva eroarea.
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
