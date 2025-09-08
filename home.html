@@ -31,6 +31,7 @@
             height: 100%;
             background-color: #0f172a;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
@@ -41,18 +42,35 @@
         .logo-image {
             width: 100px;
             height: 100px;
-            animation: fadeInScale 1.5s forwards;
+            animation: bitePulse 1s ease-in-out infinite alternate;
         }
 
-        @keyframes fadeInScale {
+        /* Animatia pentru efectul de muscatura/pulsare */
+        @keyframes bitePulse {
+            0% {
+                transform: scale(0.95) rotate(-2deg);
+                filter: brightness(0.9);
+            }
+            100% {
+                transform: scale(1.05) rotate(2deg);
+                filter: brightness(1.1);
+            }
+        }
+
+        .preloader-text {
+            animation: fadeInText 1s ease-in-out forwards;
+            opacity: 0;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInText {
             0% {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: translateY(10px);
             }
-
             100% {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0);
             }
         }
 
@@ -134,8 +152,8 @@
 
     <!-- Preloader -->
     <div id="preloader" class="flex flex-col items-center justify-center">
-        <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
         <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/100x100/5e5d5d/FFFFFF?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+        <span class="text-3xl font-extrabold preloader-text">Lupii Oasului</span>
     </div>
 
     <!-- Header & Navigatie -->
@@ -232,23 +250,14 @@
                 <span class="text-4xl md:text-5xl font-extrabold text-blue-500">VS</span>
                 <!-- Echipa 2 (Someșul Satu Mare) -->
                 <div class="flex flex-col items-center">
-                    <img src="IMAGES/somesul.jpg" alt="Someșul Satu Mare Logo" class="w-24 h-24 rounded-full mb-2">
+                    <!-- Aici am adaugat un placeholder personalizat pentru "Someșul" -->
+                    <img src="IMAGES/somesul.jpg" onerror="this.onerror=null; this.src='https://placehold.co/100x100/374151/FFFFFF?text=Someșul';" alt="Someșul Satu Mare Logo" class="w-24 h-24 rounded-full mb-2">
                     <span class="text-2xl font-bold">Someșul 2010 Satu Mare</span>
                 </div>
-                </div>
-                <p>Un meci de poveste în Cupa Juniorilor: Lupii Oasului 2017 vs. Someșul 2010 Satu Mare
-În inima județului Satu Mare, acolo unde pasiunea pentru fotbal este mai presus de orice, se pregătește un meci care va rămâne mult timp în amintirea suporterilor: tinerii "Lupi ai Oașului" din generația 2017 se vor duela cu redutabila echipă a clubului Someșul 2010 Satu Mare.
-
-Această confruntare este mai mult decât un simplu meci amical. Este o întâlnire între două generații de excepție, un test al curajului și al ambiției pentru micuții fotbaliști din Oaș, care vor înfrunta adversari mai experimentați și mai maturi. Diferența de vârstă este o provocare majoră, dar pentru Lupii Oasului, fiecare meci este o ocazie de a învăța, de a crește și de a demonstra că talentul și inima mare pot depăși orice obstacol.
-
-Sub privirile atente ale antrenorilor și a suporterilor, cele două echipe vor scrie un nou capitol în istoria fotbalului juvenil din regiune. Va fi o demonstrație de tehnică, strategie și, mai ales, de fair-play. Lupii sunt gata să lupte pentru fiecare minge, pentru fiecare metru de teren, animați de dorința de a-și depăși limitele și de a-i face mândri pe cei care îi susțin.
-
-Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii sportivi, care vor înțelege că fotbalul este despre muncă, respect și, cel mai important, despre bucuria de a fi o echipă.</p>
+              
             </div>
-            <br>
-            <hr>
-            <br>
-            
+        </div>
+        
             <div id="countdown" class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <div class="countdown-box p-6 rounded-lg w-full sm:w-auto">
                     <div id="days" class="countdown-number text-blue-400 font-bold">00</div>
@@ -269,6 +278,23 @@ Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii spo
             </div>
         </div>
     </section>
+    <p-><div class="container mx-auto px-6 text-center">
+            <section class="mb-8">
+                <h3 class="text-3xl font-extrabold text-blue-500 mb-4">Data și Ora Meciului</h3>
+                <p class="text-gray-300 text-lg">Miercuri, 09.09.2025, Ora 18:00</p>
+                <p class="text-gray-300 text-lg">Locația: Stadionul Municipal Satu Mare</p>
+   
+        </section>
+        <hr>
+        <p>Un meci de poveste în Cupa Juniorilor: Lupii Oasului 2017 vs. Someșul 2010 Satu Mare
+În inima județului Satu Mare, acolo unde pasiunea pentru fotbal este mai presus de orice, se pregătește un meci care va rămâne mult timp în amintirea suporterilor: tinerii "Lupi ai Oașului" din generația 2017 se vor duela cu redutabila echipă a clubului Someșul 2010 Satu Mare.
+
+Această confruntare este mai mult decât un simplu meci amical. Este o întâlnire între două generații de excepție, un test al curajului și al ambiției pentru micuții fotbaliști din Oaș, care vor înfrunta adversari mai experimentați și mai maturi. Diferența de vârstă este o provocare majoră, dar pentru Lupii Oasului, fiecare meci este o ocazie de a învăța, de a crește și de a demonstra că talentul și inima mare pot depăși orice obstacol.
+
+Sub privirile atente ale antrenorilor și a suporterilor, cele două echipe vor scrie un nou capitol în istoria fotbalului juvenil din regiune. Va fi o demonstrație de tehnică, strategie și, mai ales, de fair-play. Lupii sunt gata să lupte pentru fiecare minge, pentru fiecare metru de teren, animați de dorința de a-și depăși limitele și de a-i face mândri pe cei care îi susțin.
+
+Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii sportivi, care vor înțelege că fotbalul este despre muncă, respect și, cel mai important, despre bucuria de a fi o echipă.</p>
+            </p->
 
     <!-- Sectiune Ultimele Rezultate -->
     <section class="py-20 bg-gray-900">
@@ -295,9 +321,9 @@ Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii spo
                         </div>
                     </div>
                     <ul class="text-sm text-gray-400 list-none p-0 m-0">
-                        <li>Ganea Camelia (15')</li>
-                        <li>Balint Anton (19')</li>
-                        <li>MURESAN MATEI (39')</li>
+                        <li>Roman Fenley (15')</li>
+                        <li>Miguel Beckel (19')</li>
+                        <li>Jonah Jolicoeur (39')</li>
                     </ul>
                 </div>
                 <!-- Poti adauga mai multe carduri similare aici -->
@@ -347,6 +373,7 @@ Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii spo
             const preloader = document.getElementById('preloader');
             const body = document.body;
 
+            // Pastram o mica intarziere pentru a permite animatiei sa ruleze
             setTimeout(() => {
                 preloader.style.opacity = '0';
                 setTimeout(() => {
@@ -354,7 +381,7 @@ Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii spo
                     body.style.visibility = 'visible';
                     body.style.opacity = '1';
                 }, 500);
-            }, 1500);
+            }, 2500); // Am marit timpul la 2.5 secunde pentru a vedea efectul de muscatura
 
             // Functia pentru countdown
             // Seteaza data si ora tinta la 18:00 (6 PM) mâine
