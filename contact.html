@@ -1,238 +1,246 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Lupii Oasului</title>
-    <!-- Încarcă Tailwind CSS prin CDN -->
+    <title>Contact | Lupii Oasului</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Încarcă Font Awesome pentru iconițe sociale -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
         body {
-            font-family: 'Inter', sans-serif;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease-in-out;
-            background-color: #1a202c;
-            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .hero-mini {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('IMAGES/LUPI HERO.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0 60px 0;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 32px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
         }
 
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0f172a;
+            inset: 0;
+            background: white;
+            z-index: 1000;
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-in-out;
+            align-items: center;
+            transition: opacity 0.6s ease;
         }
 
-        .logo-image {
-            width: 100px;
-            height: 100px;
-            animation: fadeInScale 1.5s forwards;
-        }
-
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        .social-icon {
-            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
-        }
-        .social-icon:hover {
-            transform: scale(1.1);
-        }
-        .social-icon.facebook:hover { color: #1877F2; }
-        .social-icon.instagram:hover { color: #E1306C; }
-        .social-icon.twitter:hover { color: #1DA1F2; }
-        .social-icon.tiktok:hover { color: #69C9D0; }
-
-        .shadow-3xl {
-            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.5), 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        .map-container {
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            height: 400px;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 antialiased">
 
-    <!-- Preloader -->
-    <div id="preloader" class="flex flex-col items-center justify-center">
-        <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
-        <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/100x100/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
+<body class="antialiased bg-slate-50">
+
+    <div id="preloader">
+        <div class="text-center">
+            <img src="IMAGES/logo.png" alt="Logo" class="w-24 h-24 rounded-full mx-auto animate-pulse border-4 border-blue-600 p-1 object-cover">
+            <p class="mt-4 font-bold text-slate-400 tracking-widest uppercase text-xs">Lupii se pregătesc...</p>
+        </div>
     </div>
 
-    <!-- Header & Navigație -->
-    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
-                <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
-                <img src="IMAGES/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/40x40/334155/E2E8F0?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
-                <span class="text-blue-500">Lupii Oasului</span>
+    <header class="glass-nav sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="home.html" class="flex items-center space-x-3 group">
+                <img src="IMAGES/logo.png" alt="Logo" class="h-12 w-12 rounded-full border-2 border-blue-600 object-cover">
+                <div class="leading-none">
+                    <span class="text-xl font-black tracking-tighter text-slate-800 block">LUPII</span>
+                    <span class="text-blue-600 text-sm font-bold tracking-widest uppercase">Oasului</span>
+                </div>
             </a>
             
-            <!-- Navigație pentru desktop (vizibilă doar pe ecrane mari) -->
-            <div class="space-x-8 hidden md:flex">
-                <a href="home.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
-                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
-                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
-                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
-                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
-                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
-                <a href="contact.html" class="text-blue-500 font-bold transition-colors duration-300">CONTACT</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="home.html" class="text-slate-600 hover:text-blue-600 font-bold transition-colors">Home</a>
+                <a href="echipe.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">Echipe</a>
+                <a href="orar.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">Orar</a>
+                <a href="contact.html" class="bg-blue-600 text-white px-6 py-2.5 rounded-full shadow-lg shadow-blue-200 font-bold">Înscrieri</a>
             </div>
 
-            <!-- Buton pentru meniul mobil (vizibil doar pe ecrane mici) -->
-            <button id="menu-button" class="md:hidden text-gray-300 hover:text-blue-500 focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
+            <button id="mobile-menu-button" class="md:hidden text-slate-800 p-2"><i class="fas fa-bars-staggered text-2xl" id="menu-icon"></i></button>
         </nav>
-        <!-- Meniul mobil (ascuns implicit) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 px-4 pt-2 pb-4">
-            <nav class="flex flex-col space-y-2">
-                <a href="home.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">HOME</a>
-                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ECHIPE</a>
-                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ANTRENORI</a>
-                <a href="orar.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ORAR</a>
-                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">GALLERY</a>
-                <a href="about.html" class="text-gray-300 hover:text-blue-500 py-2 transition-colors duration-200">ABOUT</a>
-                <a href="contact.html" class="text-blue-500 font-bold py-2 transition-colors duration-200">CONTACT</a>
-            </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b absolute w-full left-0 shadow-2xl">
+            <div class="flex flex-col p-6 space-y-4">
+                <a href="home.html" class="text-slate-600 font-bold text-lg">Home</a>
+                <a href="echipe.html" class="text-slate-600 font-semibold text-lg">Echipe</a>
+                <a href="orar.html" class="text-slate-600 font-semibold text-lg">Orar</a>
+                 <a href="despre noi.html" class="text-slate-600 font-semibold text-lg">Despre Noi</a>
+               
+            </div>
         </div>
     </header>
 
-    <!-- Main Content Section -->
-    <main class="flex items-center justify-center py-12 md:py-20 p-4">
-        <!-- Container principal, stilat pentru a se potrivi cu pagina anterioară -->
-        <div class="bg-gray-800 p-8 rounded-3xl shadow-3xl w-full max-w-4xl">
-            <h1 class="text-4xl md:text-5xl font-bold text-center text-white mb-6">Contactați-ne</h1>
-            <p class="text-center text-gray-400 mb-8">
-                Pentru orice întrebări sau informații suplimentare, ne puteți contacta folosind detaliile de mai jos sau prin completarea formularului.
-            </p>
-
-            <!-- Detalii de contact și social media -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                <!-- Informații de contact -->
-                <div class="bg-gray-700 p-6 rounded-2xl shadow-inner">
-                    <h2 class="text-2xl font-semibold text-white mb-4 flex items-center">
-                        <i class="fas fa-info-circle mr-3 text-blue-400"></i>
-                        Informații de contact
-                    </h2>
-                    <ul class="space-y-3 text-gray-300">
-                        <div class="p-8 rounded-lg shadow-lg bg-gray-800 max-w-lg mx-auto">
-        <h1 class="text-3xl font-bold mb-4 text-center">Trimite un email</h1>
-        <p class="text-center mb-6 text-gray-400">Apasă pe link pentru a deschide clientul de email.</p>
-        <div class="flex items-center justify-center">
-            <!-- Link-ul actualizat cu mailto: -->
-            <a href="mailto:office@lupiioasului.com?subject=Intrebare%20de%20la%20site&body=Buna%20ziua,%20as%20dori%20sa%20aflu%20mai%20multe%20informatii%20despre..." class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center">
-                <i class="fas fa-envelope mr-2"></i>
-                Trimite email
-            </a>
+    <section class="hero-mini text-white text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-6xl font-black uppercase italic mb-4">Contactează-ne</h1>
+            <p class="text-blue-200 max-w-2xl mx-auto font-medium">Suntem aici să răspundem întrebărilor tale și să te primim în haită.</p>
         </div>
-        <p class="mt-4 text-sm text-gray-500 text-center">Trimite-ne e-mail la office@lupiioasului.com</p>
-    </div>
+    </section>
 
-                        <li>
-                            <i class="fas fa-envelope mr-2 text-gray-500"></i>
-                            <a href="mailto:contact@exemplu.com" class="hover:underline">laur.business.13@gmail.com</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone mr-2 text-gray-500"></i>
-                            <a href="tel:+40751058502" class="hover:underline">+40751058502</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-map-marker-alt mr-2 text-gray-500"></i>
-                            Strada Tineretului 803, Vama 447350
-                        </li>
-                        <li>
-                            <i class="fas fa-clock mr-2 text-gray-500"></i>
-                            Luni - Vineri: 09:00 - 20.00
-                        </li>
-                    </ul>
-                </div>
+    <main class="container mx-auto px-6 -mt-16 pb-20 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div class="contact-card p-8">
+                    <h3 class="text-2xl font-black text-slate-800 mb-8 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-blue-600 rounded-full"></span>
+                        DETALII
+                    </h3>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Telefon</p>
+                                <a href="tel:+40751058502" class="text-lg font-bold text-slate-800 hover:text-blue-600 transition-colors">+40 751 058 502</a>
+                            </div>
+                        </div>
 
-                <!-- Harta și social media -->
-                <div class="space-y-6">
-                    <!-- Harta Google Maps -->
-                    <div class="rounded-2xl overflow-hidden shadow-inner">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2677.829151237819!2d23.394824899999996!3d47.8429031!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4737ede56bd4c67b%3A0xe5d55ab9a30098ac!2zxaNcoalaY29sYSBDdSBjbGFzZWxlIEl-VklJIFZhbWE!5e0!3m2!1sen!2sro!4v1756118669189!5m2!1sen!2sro" 
-                                width="100%" 
-                                height="450" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Email</p>
+                                <a href="mailto:office@lupiioasului.com" class="text-lg font-bold text-slate-800 hover:text-blue-600 transition-colors">office@lupiioasului.com</a>
+                            </div>
+                        </div>
 
-                    <!-- Rețele sociale -->
-                    <div class="bg-gray-700 p-6 rounded-2xl shadow-inner">
-                        <h2 class="text-2xl font-semibold text-white mb-4 text-center">Urmăriți-ne pe Social Media</h2>
-                        <div class="flex justify-center space-x-6 text-3xl">
-                            <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Locație</p>
+                                <p class="text-lg font-bold text-slate-800 leading-tight">Strada Tineretului 803,<br>Vama, Satu Mare</p>
+                            </div>
                         </div>
                     </div>
+
+                    <hr class="my-8 border-slate-100">
+
+                    <div class="flex justify-between">
+                        <a href="#" class="w-11 h-11 bg-slate-50 rounded-xl flex items-center justify-center text-slate-600 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-11 h-11 bg-slate-50 rounded-xl flex items-center justify-center text-slate-600 hover:bg-pink-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-11 h-11 bg-slate-50 rounded-xl flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
             </div>
 
-            
-    
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="https://www.facebook.com/profile.php?id=61574498644357" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 hover:text-blue-500 transition-colors duration-300"><i class="fab fa-tiktok"></i></a>
+            <div class="lg:col-span-2 space-y-8">
+                <div class="contact-card p-4 md:p-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                        <div class="text-center md:text-left">
+                            <h3 class="text-2xl font-black text-slate-800">Trimite un mesaj</h3>
+                            <p class="text-slate-400 font-medium">Îți vom răspunde în maxim 24 de ore.</p>
+                        </div>
+                        <a href="mailto:office@lupiioasului.com?subject=Inscriere" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 flex items-center gap-2">
+                            <i class="fas fa-paper-plane"></i> DESCHIDE EMAIL
+                        </a>
+                    </div>
+                    
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2685.8752119730594!2d23.38888!3d47.83055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDQ5JzUwLjAiTiAyM8KwMjMnMTkuOSJF!5e0!3m2!1sro!2sro!4v1625500000000!5m2!1sro!2sro" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
             </div>
-            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate</p>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-white pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <img src="IMAGES/logo.png" class="w-20 h-20 rounded-full mb-6 border-2 border-blue-600 object-cover">
+                    <p class="text-slate-400 text-sm leading-relaxed">Formăm caractere prin sport. Singura academie de elită din regiunea Oașului.</p>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-6">Club</h4>
+                    <ul class="space-y-3 text-sm font-bold text-slate-400">
+                        <li><a href="despre.html" class="hover:text-white transition-colors">Despre noi</a></li>
+                        <li><a href="grupe.html" class="hover:text-white transition-colors">Grupe</a></li>
+                        <li><a href="staff.html" class="hover:text-white transition-colors">Staff</a></li>
+                        <li><a href="stiri.html" class="hover:text-white transition-colors">Știri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-6">Link-uri Rapide</h4>
+                    <ul class="space-y-3 text-sm font-bold text-slate-400">
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="plata.html" class="text-blue-400 hover:text-blue-300 transition-colors italic">Plată online</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Formular înscriere</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-6">Susține-ne</h4>
+                    <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                        <p class="text-blue-400 text-xs font-black uppercase mb-2">Impozit 3.5%</p>
+                        <p class="text-xs text-slate-300 mb-4">Redirecționează către performanță.</p>
+                        <a href="redirectioneaza.html" class="text-white text-xs font-bold underline">Află cum →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 text-center">
+                <p class="text-slate-500 text-[10px] uppercase font-bold tracking-[0.4em]">&copy; 2026 GANEA ILIE MIHAI. Toate drepturile rezervate.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript pentru functionalitate -->
     <script>
-        // Functia pentru a initializa preloader-ul
-        window.onload = function() {
-            const preloader = document.getElementById('preloader');
-            const body = document.body;
+        // Preloader
+        window.addEventListener('load', () => {
+            const pre = document.getElementById('preloader');
+            setTimeout(() => {
+                pre.style.opacity = '0';
+                setTimeout(() => pre.style.display = 'none', 600);
+            }, 800);
+        });
 
-            setTimeout(function() {
-                preloader.style.opacity = '0';
-                setTimeout(function() {
-                    preloader.style.display = 'none';
-                    body.style.visibility = 'visible';
-                    body.style.opacity = '1';
-                }, 500);
-            }, 1500);
-        };
-        
-        // Ascultă evenimentul de încărcare a documentului pentru a inițializa meniul de mobil.
-        // Când se dă clic pe butonul cu 3 linii (menu-button), clasa 'hidden' este adăugată sau eliminată
-        // de pe meniul mobil, făcându-l vizibil sau invizibil.
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+        // Meniu Mobil
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
 
-            if (menuButton && mobileMenu) {
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = 'fas fa-xmark text-2xl';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = 'fas fa-bars-staggered text-2xl';
             }
         });
     </script>

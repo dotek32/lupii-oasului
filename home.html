@@ -4,414 +4,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME PAGE</title>
-    <!-- Incarca Tailwind CSS prin CDN -->
+    <title>LUPII OASULUI | Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Incarca Font Awesome pentru iconite sociale si meniul hamburger -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
-        body {
-            font-family: 'Inter', sans-serif;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease-in-out;
-            background-color: #1a202c;
-            /* Background intunecat pentru a se potrivi cu stilul original */
-            color: #e2e8f0;
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #1e293b; overflow-x: hidden; }
+
+        /* Navigație Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        /* Stil pentru preloader */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0f172a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-in-out;
+        .nav-link { transition: all 0.3s ease; position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #2563eb; transition: width 0.3s ease;
         }
+        .nav-link:hover::after { width: 100%; }
 
-        /* Stil pentru imaginea logo din preloader */
-        .logo-image {
-            width: 100px;
-            height: 100px;
-            animation: bitePulse 1s ease-in-out infinite alternate;
-        }
-
-        /* Animatia pentru efectul de muscatura/pulsare */
-        @keyframes bitePulse {
-            0% {
-                transform: scale(0.95) rotate(-2deg);
-                filter: brightness(0.9);
-            }
-            100% {
-                transform: scale(1.05) rotate(2deg);
-                filter: brightness(1.1);
-            }
-        }
-
-        .preloader-text {
-            animation: fadeInText 1s ease-in-out forwards;
-            opacity: 0;
-            animation-delay: 0.5s;
-        }
-
-        @keyframes fadeInText {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Hero Section */
         .hero-section {
-            background-image: url('IMAGES/LUPI HERO.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            height: 100vh;
-            position: relative;
-            z-index: 1;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('IMAGES/LUPI HERO.jpg');
+            background-size: cover; background-position: center;
+            min-height: 75vh; display: flex; align-items: center;
+            clip-path: ellipse(150% 100% at 50% 0%);
         }
 
-        /* Media query pentru ecrane mai mici (mobile) */
-        @media (max-width: 768px) {
-            .hero-section {
-                /* Asigura ca imaginea se adapteaza complet la inaltimea ecranului */
-                height: 50vh;
-                /* Asigura ca imaginea nu este decupata */
-                background-size: contain;
-                background-repeat: no-repeat;
-                /* Centreaza imaginea atat pe orizontala, cat si pe verticala */
-                background-position: center;
-            }
+        #preloader {
+            position: fixed; inset: 0; background: white; z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.6s ease;
         }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(2, 6, 23, 0.7);
-            z-index: -1;
+        /* Stiluri Slideshow Profesional */
+        .slide {
+            position: absolute; inset: 0; opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
         }
-
-        .cta-button {
-            transition: all 0.3s ease-in-out;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .match-result-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .match-result-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Stiluri pentru sectiunea de countdown */
-        .countdown-box {
-            background: rgba(45, 55, 72, 0.8);
-            /* Gri inchis semi-transparent */
-            border: 2px solid #3182ce;
-        }
-
-        .countdown-number {
-            font-size: 3rem;
-        }
-
-        /* Stiluri specifice pentru meniul mobil */
-        .mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        .mobile-menu.open {
-            transform: translateX(0);
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
         }
     </style>
 </head>
 
-<body class="bg-gray-900 text-gray-100 antialiased">
+<body>
 
-    <!-- Preloader -->
-    <div id="preloader" class="flex flex-col items-center justify-center">
-        <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/100x100/5e5d5d/FFFFFF?text=Logo';" alt="Lupii Oasului" class="logo-image mb-4">
-        <span class="text-3xl font-extrabold preloader-text">Lupii Oasului</span>
+    <div id="preloader">
+        <img src="IMAGES/logo.png" class="w-24 h-24 rounded-full animate-pulse border-4 border-blue-600 p-1 object-cover">
     </div>
 
-    <!-- Header & Navigatie -->
-    <header class="bg-gray-800 sticky top-0 z-50 shadow-lg">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-gray-100 transition-transform duration-300 transform hover:scale-105">
-                <!-- Am inlocuit SVG-ul cu un tag <img>. Schimba calea "images/logo.png" cu calea ta reala. -->
-                <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/5e5d5d/FFFFFF?text=Logo';" alt="Lupii Oasului" class="w-10 h-10 rounded-full">
-                <span class="text-blue-500">Lupii Oasului</span>
+    <header class="glass-nav">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="home.html" class="flex items-center space-x-3">
+                <img src="IMAGES/logo.png" class="h-12 w-12 rounded-full border-2 border-blue-600 object-cover">
+                <div class="leading-none">
+                    <span class="text-xl font-black text-slate-800 block">LUPII</span>
+                    <span class="text-blue-600 text-xs font-bold uppercase tracking-widest">Oasului</span>
+                </div>
             </a>
-            <div class="space-x-8 hidden md:flex">
-                <a href="home.html" class="text-blue-500 font-bold transition-colors duration-300">HOME</a>
-                <a href="echipe.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
-                <a href="antrenori.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
-                <a href="orar.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
-                <a href="gallery.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
-                <a href="about.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
-                <a href="contact.html" class="text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
+            
+            <div class="hidden lg:flex space-x-7 items-center font-bold text-sm uppercase">
+                <a href="home.html" class="text-blue-600 nav-link">Acasă</a>
+                <a href="echipe.html" class="text-slate-600 hover:text-blue-600 nav-link">Echipe</a>
+                <a href="orar.html" class="text-slate-600 hover:text-blue-600 nav-link">Orar</a>
+                <a href="antrenori.html" class="text-slate-600 hover:text-blue-600 nav-link">Antrenori</a>
+                <a href="despre.html" class="text-slate-600 hover:text-blue-600 nav-link">Despre Noi</a>
+                <a href="contact.html" class="bg-blue-600 text-white px-6 py-2.5 rounded-full shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">Contact</a>
             </div>
 
-            <!-- Buton meniu mobil (hamburger) -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-blue-500 focus:outline-none focus:text-blue-500 transition-colors duration-300">
-                <i class="fas fa-bars fa-2x"></i>
+            <button class="lg:hidden text-slate-800" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars-staggered text-2xl"></i>
             </button>
         </nav>
 
-        <!-- Meniu mobil -->
-        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-900 shadow-xl z-50 p-6 flex flex-col items-center pt-20">
-            <button id="close-menu-button" class="absolute top-4 right-4 text-gray-100 hover:text-red-500 transition-colors duration-300">
-                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            <nav class="flex flex-col space-y-8 text-center text-lg">
-                <a href="home.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">HOME</a>
-                <a href="echipe.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ECHIPE</a>
-                <a href="antrenori.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ANTRENORI</a>
-                <a href="orar.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ORAR</a>
-                <a href="gallery.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">GALLERY</a>
-                <a href="about.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">ABOUT</a>
-                <a href="contact.html" class="block text-gray-300 hover:text-blue-500 transition-colors duration-300">CONTACT</a>
-            </nav>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 p-6 space-y-4 shadow-xl text-center uppercase font-bold text-sm">
+         
+            <a href="echipe.html" class="block text-slate-600">Echipe</a>
+            <a href="orar.html" class="block text-slate-600">Orar</a>
+            <a href="antrenori.html" class="block text-slate-600">Antrenori</a>
+            <a href="despre noi.html" class="block text-slate-600">Despre Noi</a>
+            <a href="contact.html" class="block text-blue-600">Contact</a>
         </div>
     </header>
 
-    <!-- Sectiune Hero -->
-    <main class="hero-section flex items-center justify-center">
-        <div class="text-center text-white px-4">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 animate-pulse">LUPII OASULUI </h1>
-
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="about.html" class="cta-button bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
-                    <span>DESPRE NOI</span>
-                </a>
-                <a href="contact.html" class="cta-button bg-gray-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-600">
-                    <span>INSCRIERE</span>
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <!-- Sectiune "Despre Noi" -->
-    <section class="py-20 bg-gray-900">
+    <section class="hero-section text-white relative">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
-                <div class="md:w-1/2">
-                    <img src="IMAGES/parteneriat.jpg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/374151/FFFFFF?text=Parteneriat';" alt="O descriere a echipei de fotbal" class="w-full rounded-lg shadow-lg">
-                </div>
-                <div class="md:w-1/2 text-center md:text-left">
-                    <h2 class="text-4xl font-extrabold text-blue-500 mb-4">DESPRE FOTBALUL NOSTRU</h2>
-                    <h3 class="text-3xl font-bold mb-4">Descrierea Echipelor și Antrenorilor</h3>
-                    <p class="text-gray-300 mb-6">
-                        Clubul nostru de fotbal este dedicat dezvoltării tinerilor sportivi, punând accentul pe bucuria jocului, pe spiritul de echipă și pe o pregătire tehnică adaptată fiecărei grupe de vârstă. Lucrăm cu trei antrenori pasionați, fiecare specializat pe o anumită categorie de vârstă, pentru a asigura o evoluție constantă și armonioasă a copiilor.
-                    </p>
-                    <a href="about.html" class="cta-button inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
-                        <span>read more</span>
-                    </a>
-                </div>
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 italic uppercase">Viitorii <br> Campioni</h1>
+                <p class="text-lg text-slate-300 mb-10 max-w-lg leading-relaxed">Formăm caractere prin sport în inima Oașului. Performanță, disciplină și spirit de echipă.</p>
+                <a href="contact.html" class="bg-white text-blue-900 font-extrabold py-4 px-10 rounded-2xl uppercase inline-block hover:bg-blue-50 transition-all shadow-2xl">Înscrie-te Acum</a>
             </div>
         </div>
     </section>
 
-    <!-- Sectiune Countdown meci -->
-    <section class="py-20 bg-gray-800">
+    <section class="py-20 bg-white">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-extrabold mb-8">URMATORUL MECI</h2>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-12 lg:gap-20 mb-12">
-                <!-- Echipa 1 (Lupii Oasului) -->
-                <div class="flex flex-col items-center">
-                    <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/100x100/374151/FFFFFF?text=Lupii';" alt="Lupii Oasului Logo" class="w-24 h-24 rounded-full mb-2">
-                    <span class="text-2xl font-bold">Lupii Oasului 2017</span>
-                </div>
-                <!-- Text VS -->
-                <span class="text-4xl md:text-5xl font-extrabold text-blue-500">VS</span>
-                <!-- Echipa 2 (Someșul Satu Mare) -->
-                <div class="flex flex-col items-center">
-                    <!-- Aici am adaugat un placeholder personalizat pentru "Someșul" -->
-                    <img src="IMAGES/somsul 2010.jpg" onerror="this.onerror=null; this.src='https://placehold.co/100x100/374151/FFFFFF?text=Someșul';" alt="Someșul Satu Mare Logo" class="w-24 h-24 rounded-full mb-2">
-                    <span class="text-2xl font-bold">Someșul 2010 Satu Mare</span>
-                </div>
-              
-            </div>
-        </div>
-        
-            <div id="countdown" class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <div class="countdown-box p-6 rounded-lg w-full sm:w-auto">
-                    <div id="days" class="countdown-number text-blue-400 font-bold">00</div>
-                    <div class="text-sm font-semibold text-gray-400">ZILE</div>
-                </div>
-                <div class="countdown-box p-6 rounded-lg w-full sm:w-auto">
-                    <div id="hours" class="countdown-number text-blue-400 font-bold">00</div>
-                    <div class="text-sm font-semibold text-gray-400">ORE</div>
-                </div>
-                <div class="countdown-box p-6 rounded-lg w-full sm:w-auto">
-                    <div id="minutes" class="countdown-number text-blue-400 font-bold">00</div>
-                    <div class="text-sm font-semibold text-gray-400">MINUTE</div>
-                </div>
-                <div class="countdown-box p-6 rounded-lg w-full sm:w-auto">
-                    <div id="seconds" class="countdown-number text-blue-400 font-bold">00</div>
-                    <div class="text-sm font-semibold text-gray-400">SECUNDE</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <p-><div class="container mx-auto px-6 text-center">
-            <section class="mb-8">
-                <h3 class="text-3xl font-extrabold text-blue-500 mb-4">Data și Ora Meciului</h3>
-                <p class="text-gray-300 text-lg">Miercuri, 09.09.2025, Ora 18:00</p>
-                <p class="text-gray-300 text-lg">Locația: Stadionul Municipal Satu Mare</p>
-   
-        </section>
-        <hr>
-        <p>Un meci de poveste în Cupa Juniorilor: Lupii Oasului 2017 vs. Someșul 2010 Satu Mare
-În inima județului Satu Mare, acolo unde pasiunea pentru fotbal este mai presus de orice, se pregătește un meci care va rămâne mult timp în amintirea suporterilor: tinerii "Lupi ai Oașului" din generația 2017 se vor duela cu redutabila echipă a clubului Someșul 2010 Satu Mare.
-
-Această confruntare este mai mult decât un simplu meci amical. Este o întâlnire între două generații de excepție, un test al curajului și al ambiției pentru micuții fotbaliști din Oaș, care vor înfrunta adversari mai experimentați și mai maturi. Diferența de vârstă este o provocare majoră, dar pentru Lupii Oasului, fiecare meci este o ocazie de a învăța, de a crește și de a demonstra că talentul și inima mare pot depăși orice obstacol.
-
-Sub privirile atente ale antrenorilor și a suporterilor, cele două echipe vor scrie un nou capitol în istoria fotbalului juvenil din regiune. Va fi o demonstrație de tehnică, strategie și, mai ales, de fair-play. Lupii sunt gata să lupte pentru fiecare minge, pentru fiecare metru de teren, animați de dorința de a-și depăși limitele și de a-i face mândri pe cei care îi susțin.
-
-Indiferent de rezultat, acest meci va fi o lecție valoroasă pentru tinerii sportivi, care vor înțelege că fotbalul este despre muncă, respect și, cel mai important, despre bucuria de a fi o echipă.</p>
-            </p->
-
-    <!-- Sectiune Ultimele Rezultate -->
-    <section class="py-20 bg-gray-900">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-blue-500">ULTIMELE REZULTATE</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Exemplu de card de rezultat -->
-                <div class="match-result-card bg-gray-800 p-8 rounded-lg shadow-xl text-center">
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="text-center">
-                            <img src="IMAGES/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/374151/FFFFFF?text=Team';" alt="Team 1 Logo" class="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-gray-600">
-                            <h4 class="text-xl font-bold text-gray-200">Echipa 2016</h4>
-                            <span class="text-green-500 font-semibold">(Castig)</span>
-                        </div>
-                        <div class="text-4xl font-extrabold text-blue-400">
-                            3 - 1
-                        </div>
-                        <div class="text-center">
-                            <img src="https://placehold.co/60x60/4a5568/ffffff?text=TEAM" alt="Team 2 Logo" class="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-gray-600">
-                            <h4 class="text-xl font-bold text-gray-200">U Cluj</h4>
-                            <span class="text-red-500 font-semibold">(Pierdut)</span>
+            <h3 class="text-3xl font-black text-slate-900 mb-10 italic uppercase tracking-tight">Rezumat Video</h3>
+            <div class="max-w-4xl mx-auto rounded-[2.5rem] overflow-hidden shadow-2xl bg-black aspect-video relative group" id="vid-box">
+                <div id="vid-cover" class="absolute inset-0 z-20 cursor-pointer" onclick="runVideo()">
+                    <img src="https://img.youtube.com/vi/bFQW1YxhX9s/maxresdefault.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-all">
+                            <i class="fas fa-play text-white text-3xl ml-1"></i>
                         </div>
                     </div>
-                    <ul class="text-sm text-gray-400 list-none p-0 m-0">
-                        <li>Roman Fenley (15')</li>
-                        <li>Miguel Beckel (19')</li>
-                        <li>Jonah Jolicoeur (39')</li>
-                    </ul>
                 </div>
-                <!-- Poti adauga mai multe carduri similare aici -->
+                <div id="vid-player" class="w-full h-full"></div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-400 py-8">
+    <section class="py-24 bg-slate-950 text-white overflow-hidden">
         <div class="container mx-auto px-6 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <!-- Am adaugat un CDN pentru Font Awesome pentru a afisa iconitele -->
-                <a href="https://www.facebook.com/profile.php?id=61574498644355" class="text-gray-400 social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/lupii.oasului/?fbclid=IwY2xjawMZIFFleHRuA2FlbQIxMABicmlkETA4RlZ5eElGd25WQXdMVGd4AR6RQCrBhG-3iN2vGXqx5ScZV_0JyqPfrmnC9AxvnC4-ebvC5nrlpOGaiTzX6g_aem_dTFmpbUnktGdWY8yrxgU6Q" class="text-gray-400 social-icon instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@lupii.oasului" class="text-gray-400 social-icon tiktok"><i class="fab fa-tiktok"></i></a>
+            <h3 class="text-3xl font-black mb-12 italic uppercase tracking-wider">Galerie Foto</h3>
+            
+            <div class="max-w-5xl mx-auto relative group">
+                <div class="relative h-[400px] md:h-[600px] w-full rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(37,99,235,0.2)] border border-white/10 bg-slate-900">
+                    
+                    <div class="slide active">
+                        <img src="IMAGES/meci/1.jpg" class="w-full h-full object-cover" alt="Meci 1">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-10 text-left">
+                            <p class="text-blue-400 font-black uppercase text-xs tracking-widest">Campionat 2024</p>
+                            <h4 class="text-xl font-bold">Determinare pe teren</h4>
+                        </div>
+                    </div>
+
+                    <div class="slide">
+                        <img src="IMAGES/meci/2.jpg" class="w-full h-full object-cover" alt="Meci 2">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-10 text-left">
+                            <p class="text-blue-400 font-black uppercase text-xs tracking-widest">Echipa U11</p>
+                            <h4 class="text-xl font-bold">Spirit de luptă</h4>
+                        </div>
+                    </div>
+
+                    <div class="slide">
+                        <img src="IMAGES/meci/3.jpg" class="w-full h-full object-cover" alt="Meci 3">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-10 text-left">
+                            <p class="text-blue-400 font-black uppercase text-xs tracking-widest">Antrenament</p>
+                            <h4 class="text-xl font-bold">Excelență în pregătire</h4>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button onclick="moveSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-md hover:bg-blue-600 p-5 rounded-2xl transition-all border border-white/20 opacity-0 group-hover:opacity-100">
+                    <i class="fas fa-chevron-left text-xl"></i>
+                </button>
+                <button onclick="moveSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl transition-all shadow-xl opacity-0 group-hover:opacity-100">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </button>
+
+                <div class="flex justify-center space-x-3 mt-8" id="slide-dots">
+                    <div class="h-1.5 rounded-full cursor-pointer transition-all dot w-12 bg-blue-600"></div>
+                    <div class="h-1.5 rounded-full cursor-pointer transition-all dot w-3 bg-slate-700"></div>
+                    <div class="h-1.5 rounded-full cursor-pointer transition-all dot w-3 bg-slate-700"></div>
+                </div>
             </div>
-            <p>&copy; GANEA ILIE MIHAI. Toate drepturile rezervate 2025</p>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white pt-20 pb-10 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left">
+                <div>
+                    <img src="IMAGES/logo.png" class="w-20 h-20 rounded-full mb-6 border-2 border-blue-600 object-cover">
+                    <p class="text-slate-400 text-sm leading-relaxed">Formăm caractere prin sport. Singura academie de elită din regiunea Oașului dedicată performanței.</p>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-8">Club</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-400">
+                        <li><a href="despre.html" class="hover:text-white transition-colors">Povestea Noastră</a></li>
+                        <li><a href="echipe.html" class="hover:text-white transition-colors">Grupele Academiei</a></li>
+                        <li><a href="antrenori.html" class="hover:text-white transition-colors">Staff Tehnic</a></li>
+                        <li><a href="orar.html" class="hover:text-white transition-colors">Program</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-8">Link-uri</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-400">
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Înscrieri</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Parteneri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest text-blue-500 mb-8">Susține Academia</h4>
+                    <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                        <p class="text-blue-400 text-xs font-black uppercase mb-2">Redirecționează 3.5%</p>
+                        <p class="text-[11px] text-slate-400">Ajută viitorul copiilor prin impozit. Redirecționarea este gratuită.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 text-center">
+                <p class="text-slate-600 text-[10px] uppercase font-bold tracking-[0.4em]">© 2026 Lupii Oasului. Proiect coordonat de Ganea Ilie Mihai.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript pentru functionalitate -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Logica pentru meniul mobil
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-            });
-            
-            // Adaugă un nou buton pentru închiderea meniului și logica aferentă
-            const closeMenuButton = document.getElementById('close-menu-button');
-            closeMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-            });
-
-            // Adaugă un eveniment de click pentru a închide meniul la selectarea unui link
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('open');
-                });
-            });
-
-            // Functia pentru a initializa preloader-ul
-            const preloader = document.getElementById('preloader');
-            const body = document.body;
-
-            // Pastram o mica intarziere pentru a permite animatiei sa ruleze
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    body.style.visibility = 'visible';
-                    body.style.opacity = '1';
-                }, 500);
-            }, 2500); // Am marit timpul la 2.5 secunde pentru a vedea efectul de muscatura
-
-            // Functia pentru countdown
-            // Seteaza data si ora tinta la 18:00 (6 PM) mâine
-            const now = new Date();
-            const tomorrow = new Date(now);
-            tomorrow.setDate(now.getDate() + 1);
-            tomorrow.setHours(18, 0, 0, 0); // Seteaza ora la 18:00 (18:00)
-            const countDownDate = tomorrow.getTime();
-
-            const countdownInterval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = countDownDate - now;
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById("days").innerHTML = String(days).padStart(2, '0');
-                document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
-                document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
-                document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
-
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById("countdown").innerHTML = "Meciul a inceput!";
-                }
-            }, 1000);
+        // Preloader
+        window.addEventListener('load', () => {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(() => document.getElementById('preloader').style.display = 'none', 500);
         });
+
+        // Toggle Meniu Mobil
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Video Player
+        function runVideo() {
+            document.getElementById('vid-cover').style.display = 'none';
+            document.getElementById('vid-player').innerHTML = `
+                <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/bFQW1YxhX9s?autoplay=1&rel=0" 
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        }
+
+        // Logică Slideshow Profesional (Actualizată pentru n elemente)
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlides() {
+            slides.forEach((s, i) => {
+                s.classList.remove('active');
+                // Gestionăm clasele pentru dots dinamic
+                dots[i].className = 'h-1.5 rounded-full cursor-pointer transition-all dot ' + (i === current ? 'w-12 bg-blue-600' : 'w-3 bg-slate-700');
+            });
+            slides[current].classList.add('active');
+        }
+
+        function moveSlide(direction) {
+            current = (current + direction + slides.length) % slides.length;
+            updateSlides();
+        }
+
+        // Click pe dots pentru a sări la o imagine specifică
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                current = index;
+                updateSlides();
+            });
+        });
+
+        // Auto-play la 5 secunde
+        setInterval(() => moveSlide(1), 5000);
     </script>
 </body>
-
 </html>
